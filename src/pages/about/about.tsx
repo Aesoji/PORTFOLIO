@@ -1,22 +1,37 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type Dispatch,
+  type MutableRefObject,
+  type SetStateAction,
+} from "react";
 import "./about.css";
 
-import { photography, outside } from "../../data/photographyData";
+/* Photos and their order are set in src/data/photography.ts */
+import { photography, outside, type Photo } from "../../data/photographyData";
 
-const STEP_MS = 90;
-const MAX_WAIT_MS = 1500; 
+/* ---------- Reveal settings ---------- */
+const STEP_MS = 90; // gap between each tile appearing
+const MAX_WAIT_MS = 1500; // if a photo is slow, move on after this long
 
-
+/* Grid is 3 columns × 4 rows. Reveal order goes row by row,
+   left to right: P1, P2, P3, then P4, P5, P6 … */
 const GRID_COLS = 3;
 const GRID_ROWS = 4;
 const GRID_ORDER = Array.from({ length: GRID_COLS * GRID_ROWS }, (_, i) => i);
 
-
+/* Bento, row by row, left to right:
+   row 1: A (full width)   row 2: B, C   row 3: D  → A, B, C, D */
 const BENTO_ORDER = [0, 1, 2, 3];
 
+/* ---------- Hooks ---------- */
 
+// true once the element scrolls into view (stays true)
 function useInView() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
 
   useEffect(() => {
@@ -30,14 +45,16 @@ function useInView() {
     return () => observer.disconnect();
   }, [inView]);
 
-  return [ref, inView];
+  return { ref, inView };
 }
 
-function useCascade(total) {
-  const [loaded, setLoaded] = useState(() => Array(total).fill(false));
-  const [count, setCount] = useState(0); 
+/* Reveals items one at a time, in order. Each waits until its photo has
+   loaded (or MAX_WAIT_MS passes), so slow photos never break the cascade. */
+function useCascade(total: number) {
+  const [loaded, setLoaded] = useState<boolean[]>(() => Array(total).fill(false));
+  const [count, setCount] = useState(0); // how many (in reveal order) are shown
 
-  const markLoaded = useCallback((index) => {
+  const markLoaded = useCallback((index: number) => {
     setLoaded((prev) => {
       if (prev[index]) return prev;
       const next = [...prev];
@@ -49,7 +66,15 @@ function useCascade(total) {
   return { loaded, count, setCount, markLoaded };
 }
 
-function useCascadeTimer({ order, loaded, count, setCount, active }) {
+interface CascadeTimerOptions {
+  order: number[];
+  loaded: boolean[];
+  count: number;
+  setCount: Dispatch<SetStateAction<number>>;
+  active: boolean;
+}
+
+function useCascadeTimer({ order, loaded, count, setCount, active }: CascadeTimerOptions) {
   useEffect(() => {
     if (!active || count >= order.length) return;
     const ready = loaded[order[count]];
@@ -59,13 +84,24 @@ function useCascadeTimer({ order, loaded, count, setCount, active }) {
   }, [order, loaded, count, setCount, active]);
 }
 
-function Tile({ photo, label = "", className = "", revealed, onReady }) {
+/* ---------- Photo tile (falls back to a grey placeholder) ---------- */
+interface TileProps {
+  photo?: Photo;
+  label?: string;
+  className?: string;
+  revealed: boolean;
+  onReady: () => void;
+}
+
+function Tile({ photo, label = "", className = "", revealed, onReady }: TileProps) {
+  // Placeholders have nothing to load
   useEffect(() => {
     if (!photo) onReady();
   }, [photo, onReady]);
 
+  // Catches photos that were already cached before React attached onLoad
   const imgRef = useCallback(
-    (img) => {
+    (img: HTMLImageElement | null) => {
       if (img?.complete && img.naturalWidth > 0) onReady();
     },
     [onReady]
@@ -78,6 +114,7 @@ function Tile({ photo, label = "", className = "", revealed, onReady }) {
       className={`tile ${revealed ? "tile--revealed" : ""} ${
         caption ? "tile--captioned" : ""
       } ${className}`}
+      // Focusable when it has a caption, so keyboard/tap users can see it too
       tabIndex={caption ? 0 : undefined}
     >
       {photo ? (
@@ -98,16 +135,19 @@ function Tile({ photo, label = "", className = "", revealed, onReady }) {
   );
 }
 
-function useRevealGroup(order) {
-  const [ref, inView] = useInView();
+/* A group of tiles that cascade in once scrolled into view */
+function useRevealGroup(order: number[]) {
+  const { ref, inView } = useInView();
   const { loaded, count, setCount, markLoaded } = useCascade(order.length);
   useCascadeTimer({ order, loaded, count, setCount, active: inView });
 
-  const isRevealed = (index) => order.indexOf(index) < count && loaded[index];
+  // index (in the photo list) → has its turn come?
+  const isRevealed = (index: number) => order.indexOf(index) < count && loaded[index];
   return { ref, isRevealed, markLoaded };
 }
 
-function WaveText({ children }) {
+/* ---------- Oscillating text on hover ---------- */
+function WaveText({ children }: { children: string }) {
   let i = 0;
   const words = children.split(" ");
 
@@ -116,7 +156,7 @@ function WaveText({ children }) {
       {words.map((word, w) => (
         <span key={w} className="wave__word" aria-hidden="true">
           {[...word].map((char) => (
-            <span key={i} className="wave__char" style={{ "--i": i++ }}>
+            <span key={i} className="wave__char" style={{ "--i": i++ } as CSSProperties}>
               {char}
             </span>
           ))}
@@ -133,10 +173,13 @@ export default function About() {
   const bento = useRevealGroup(BENTO_ORDER);
 
   // Stable per-tile callbacks so tiles don't re-run their effects every render
-  const gridReady = useRef([]);
-  const bentoReady = useRef([]);
-  const readyFor = (store, mark, n) =>
-    (store.current[n] ??= () => mark(n));
+  const gridReady = useRef<(() => void)[]>([]);
+  const bentoReady = useRef<(() => void)[]>([]);
+  const readyFor = (
+    store: MutableRefObject<(() => void)[]>,
+    mark: (n: number) => void,
+    n: number
+  ) => (store.current[n] ??= () => mark(n));
 
   return (
     <main className="about">
@@ -180,6 +223,7 @@ export default function About() {
         </div>
       </section>
 
+      {/* Row 2 — bento grid + outside of work */}
       <section className="about__row">
         <div className="about__copy">
           <h3 className="h3">Outside of work</h3>
@@ -191,13 +235,12 @@ export default function About() {
             in other creative ways.
           </p>
           <p className="text">
-            Something to know about me is that I am a musical person. From dancing, 
-            to singing (terribly), and my love for playing the flute. The day that 
-            I learn to play flight of the bumblebee, <strong>it's over for everyone.</strong>
+            I also like playing the flute. The day that I learn to play flight
+            of the bumblebee, it's over for everyone.
           </p>
           <p className="text">
             I also like learning languages. I apologize in advance for going on
-            my linguistic tangents or wanting to test my (absolutely terrible)
+            linguistic tangents or wanting to test my (absolutely terrible)
             language skills with you.
           </p>
         </div>

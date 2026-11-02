@@ -33,7 +33,7 @@ export default function ProjectOverview() {
       <main className="overview overview--missing">
         <h1 className="title">Project not found</h1>
         <Link to="/#projects" className="see-more">
-          <span aria-hidden="true">←</span>
+          <span aria-hidden="true">←</span> 
           back to projects
         </Link>
       </main>
