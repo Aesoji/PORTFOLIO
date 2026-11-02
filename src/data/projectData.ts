@@ -66,10 +66,6 @@ export const projects: Project[] = [
             goal: "In an effort to propose a better solution to tackling dry eye disease, our team developed gleyeco. As their UI/UX Designer & Front-End Developer, my role was to translate an incredibly complex scientific concept into an accessible, intuitive, and transparent website that can be accessed and understood by any individual irrespective of their education background. We needed to communicate the science behind the product, explain the research and development process, and build confidence in the project's potential among very different audiences: patients, clinicians, researchers, and potential investors. This meant finding the balance between scientific accuracy and accessible communication. Through both the project’s brand identity and website, I was responsible for making the science approachable and cohesive without oversimplying it.",
             reflection: [
                 { 
-                    title: "Designing for understanding.",
-                    text: "Scientific accuracy and accessibility don't always come together naturally. With iGEM(gleyeco), I learned how to break down complex research into digestible information without stripping away the science that makes it credible." 
-                },
-                { 
                     title: "Transparency is part of the user experience.",
                     text: "Communicating a product's potential also means communicating its limitations. I learned that building trust requires showing the research, rationale, and uncertainties behind the design. More importantly, I learnt to communicate with external stakeholders and clients to ensure that the design aligned with their vision and goals." 
                 
@@ -110,11 +106,6 @@ export const projects: Project[] = [
                     text: "Since NAT serves people with very different motivations. I learned to think beyond a single user journey and design pathways that help each stakeholder understand where they fit and how they can contribute."
                 },
                 { 
-                    title: "A mission is more than its catchy line.",
-                    text: "Communicating NAT's vision meant making its value tangible. I learned the importance of translating broad ambitions into clear messaging, meaningful calls to action, and measurable impact."
-                
-                },
-                { 
                     title: "A website needs to work behind the scenes, too.",
                     text: "Designing for NAT also meant considering the internal team responsible for maintaining it. I learned to think about content management, scalability, and long-term usability."                
                 },
@@ -135,7 +126,7 @@ export const projects: Project[] = [
         id: "sentimenti",
         title: "SENTIMENTI",
         subtitle: "FigBuild 2026 • Product Designer",
-        description: "In a hypothetical scenario where one could measure and visualize an aspect of the human sensory experience unbeknownst to current technologies; we designed and proposed a new mobile app with a new mobile app that can track one's emotions.",
+        description: "In a hypothetical scenario where one could measure and visualize an aspect of the human sensory experience unbeknownst to current technologies; we designed and proposed a new mobile app that can track one's emotions.",
     
         overview: {
             organization: "FigBuild 2026",
@@ -144,10 +135,6 @@ export const projects: Project[] = [
 
             goal: "Sentimenti explores the intersection of emotional awareness and human perception through the concept of clairempathy, the ability to perceive and understand emotions through visualization. Developed during FIGBUILD 2026, the project challenged us to rethink how people recognize and respond to their emotional states. We designed a speculative emotional wellness tool that translates physiological signals, such as heart rate and stress indicators, into intuitive visual and sensory feedback. As a Product Designer, I helped shape the concept into a cohesive, high-fidelity Figma prototype, exploring how complex emotional data could become more accessible, understandable, and actionable.",
             reflection: [
-                { 
-                    title: "Design for something you can't always see.",
-                    text: "Scientific accuracy and accessibility don't always come naturally together. I learned how to break down complex research into digestible information without stripping away the science that makes it credible." 
-                },
                 { 
                     title: "Less is more.",
                     text: "Visualizing physiological data challenged me to balance accuracy with simplicity. I learned that the goal isn't to show users everything, but to help them recognize what actually matters."                

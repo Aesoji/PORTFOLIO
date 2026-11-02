@@ -41,13 +41,6 @@ export const gallery: GalleryItem[] = [
   },
   {
     id: "gallery-4",
-    title: "ITWÊWINA",
-    year: "2026",
-    description: "A UI case study for a speculative platform that connects Indigenous communities and organizations across Canada.",
-    media: { type: "image" },
-  },
-  {
-    id: "gallery-5",
     title: "AMF",
     year: "2026",
     description: "Creating the branding identity.",

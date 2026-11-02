@@ -10,26 +10,18 @@ import {
 } from "react";
 import "./about.css";
 
-/* Photos and their order are set in src/data/photography.ts */
 import { photography, outside, type Photo } from "../../data/photographyData";
 
-/* ---------- Reveal settings ---------- */
-const STEP_MS = 90; // gap between each tile appearing
-const MAX_WAIT_MS = 1500; // if a photo is slow, move on after this long
+const STEP_MS = 90; 
+const MAX_WAIT_MS = 1500;
 
-/* Grid is 3 columns × 4 rows. Reveal order goes row by row,
-   left to right: P1, P2, P3, then P4, P5, P6 … */
+
 const GRID_COLS = 3;
 const GRID_ROWS = 4;
 const GRID_ORDER = Array.from({ length: GRID_COLS * GRID_ROWS }, (_, i) => i);
-
-/* Bento, row by row, left to right:
-   row 1: A (full width)   row 2: B, C   row 3: D  → A, B, C, D */
 const BENTO_ORDER = [0, 1, 2, 3];
 
-/* ---------- Hooks ---------- */
 
-// true once the element scrolls into view (stays true)
 function useInView() {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
@@ -48,11 +40,10 @@ function useInView() {
   return { ref, inView };
 }
 
-/* Reveals items one at a time, in order. Each waits until its photo has
-   loaded (or MAX_WAIT_MS passes), so slow photos never break the cascade. */
+
 function useCascade(total: number) {
   const [loaded, setLoaded] = useState<boolean[]>(() => Array(total).fill(false));
-  const [count, setCount] = useState(0); // how many (in reveal order) are shown
+  const [count, setCount] = useState(0);
 
   const markLoaded = useCallback((index: number) => {
     setLoaded((prev) => {
@@ -84,7 +75,7 @@ function useCascadeTimer({ order, loaded, count, setCount, active }: CascadeTime
   }, [order, loaded, count, setCount, active]);
 }
 
-/* ---------- Photo tile (falls back to a grey placeholder) ---------- */
+
 interface TileProps {
   photo?: Photo;
   label?: string;
@@ -94,12 +85,10 @@ interface TileProps {
 }
 
 function Tile({ photo, label = "", className = "", revealed, onReady }: TileProps) {
-  // Placeholders have nothing to load
   useEffect(() => {
     if (!photo) onReady();
   }, [photo, onReady]);
 
-  // Catches photos that were already cached before React attached onLoad
   const imgRef = useCallback(
     (img: HTMLImageElement | null) => {
       if (img?.complete && img.naturalWidth > 0) onReady();
@@ -114,7 +103,6 @@ function Tile({ photo, label = "", className = "", revealed, onReady }: TileProp
       className={`tile ${revealed ? "tile--revealed" : ""} ${
         caption ? "tile--captioned" : ""
       } ${className}`}
-      // Focusable when it has a caption, so keyboard/tap users can see it too
       tabIndex={caption ? 0 : undefined}
     >
       {photo ? (
@@ -135,18 +123,17 @@ function Tile({ photo, label = "", className = "", revealed, onReady }: TileProp
   );
 }
 
-/* A group of tiles that cascade in once scrolled into view */
+
 function useRevealGroup(order: number[]) {
   const { ref, inView } = useInView();
   const { loaded, count, setCount, markLoaded } = useCascade(order.length);
   useCascadeTimer({ order, loaded, count, setCount, active: inView });
 
-  // index (in the photo list) → has its turn come?
   const isRevealed = (index: number) => order.indexOf(index) < count && loaded[index];
   return { ref, isRevealed, markLoaded };
 }
 
-/* ---------- Oscillating text on hover ---------- */
+
 function WaveText({ children }: { children: string }) {
   let i = 0;
   const words = children.split(" ");
@@ -167,12 +154,11 @@ function WaveText({ children }: { children: string }) {
   );
 }
 
-/* ---------- Page ---------- */
+
 export default function About() {
   const grid = useRevealGroup(GRID_ORDER);
   const bento = useRevealGroup(BENTO_ORDER);
 
-  // Stable per-tile callbacks so tiles don't re-run their effects every render
   const gridReady = useRef<(() => void)[]>([]);
   const bentoReady = useRef<(() => void)[]>([]);
   const readyFor = (
@@ -183,7 +169,6 @@ export default function About() {
 
   return (
     <main className="about">
-      {/* Row 1 — photography grid + intro */}
       <section className="about__row">
         <div className="photo-grid" ref={grid.ref}>
           {Array.from({ length: GRID_COLS * GRID_ROWS }, (_, n) => (
@@ -223,10 +208,9 @@ export default function About() {
         </div>
       </section>
 
-      {/* Row 2 — bento grid + outside of work */}
       <section className="about__row">
         <div className="about__copy">
-          <h3 className="h3">Outside of work</h3>
+          <h3 className="h3">Outside of the 9-5</h3>
           <p className="text">
             In my spare time, I like to continue my storytelling passion through
             other forms of media. Specifically, it is through photography,
@@ -236,7 +220,7 @@ export default function About() {
           </p>
           <p className="text">
             I also like playing the flute. The day that I learn to play flight
-            of the bumblebee, it's over for everyone.
+            of the bumblebee, <strong>it's over for everyone.</strong>
           </p>
           <p className="text">
             I also like learning languages. I apologize in advance for going on

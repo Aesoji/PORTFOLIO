@@ -1,15 +1,12 @@
-/* Uses --black, --white, --nav-bg, --nav-active-bg from your global :root */
-
 .about {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 140px 32px 120px; /* top padding clears the fixed navbar */
+  padding: 140px 32px 120px; 
   display: flex;
   flex-direction: column;
   gap: 96px;
 }
 
-/* Photos left, copy right */
 .about__row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
@@ -21,7 +18,6 @@
   margin-bottom: 0;
 }
 
-/* ---------- Tiles ---------- */
 .tile {
   position: relative;
   aspect-ratio: 1 / 1;
@@ -50,17 +46,13 @@
   color: var(--black);
 }
 
-/* ---------- 3×4 photography grid ---------- */
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(8px, 1.4vw, 16px);
 }
 
-/* ---------- Bento grid ----------
-   A A A      A = full-width top tile
-   B C C      B, D = small squares (set the row height)
-   D C C      C = large tile                           */
+
 .bento {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -82,13 +74,12 @@
 .bento__c { grid-area: c; }
 .bento__d { grid-area: d; }
 
-/* ".bento" prefix so this beats ".bento .tile" above */
 .bento .bento__b,
 .bento .bento__d {
   aspect-ratio: 1 / 1;
 }
 
-/* ---------- Oscillating sentence ---------- */
+
 .wave {
   font-weight: 700;
   cursor: default;
@@ -96,7 +87,7 @@
 }
 
 .wave__word {
-  display: inline-block; /* keeps words from breaking mid-letter */
+  display: inline-block; 
   white-space: pre;
 }
 
@@ -126,9 +117,7 @@
   }
 }
 
-/* ---------- Responsive ---------- */
 
-/* Tablet & below: stack, copy above photos */
 @media (max-width: 900px) {
   .about {
     padding: 120px 24px 96px;
@@ -157,8 +146,7 @@
   }
 }
 
-/* ---------- Cascade reveal (paste at the end of About.css) ----------
-   Tiles stay hidden until their photo has loaded and it's their turn. */
+
 .tile {
   opacity: 0;
   transform: translateY(14px) scale(0.97);
@@ -179,9 +167,6 @@
   }
 }
 
-/* ---------- Hover captions (paste at the end of About.css) ---------- */
-
-/* "Outside of work" tiles stay still — no zoom on hover */
 .bento .tile:hover img {
   transform: none;
 }
