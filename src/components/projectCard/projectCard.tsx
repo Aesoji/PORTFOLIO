@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { projectHref, type Project } from "../../data/projectData";
-import "./ProjectCard.css";
+import "./projectCard.css";
 
 interface Props {
   project: Project;

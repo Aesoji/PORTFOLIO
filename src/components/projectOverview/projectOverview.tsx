@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { projects, type ProjectMedia } from "../../data/projectData";
-import "./ProjectOverview.css";
+import "./projectOverview.css";
 
 function Media({ media, fallbackAlt }: { media?: ProjectMedia; fallbackAlt: string }) {
   const alt = media?.alt ?? fallbackAlt;
