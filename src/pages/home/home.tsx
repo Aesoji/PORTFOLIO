@@ -1,23 +1,36 @@
-import { Link } from "react-router";
+import ProjectCard from "../../components/projectCard/projectCard";
+import SideProject from "../../components/sideProjects/sideProjects";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
+import { projects } from "../../data/projectData";
+
+import "./home.css";
 
 export default function Home() {
-    return (
-        <> 
-            <h1> KENNETH'S PORTFOLIO </h1>
-            <br></br>
-        
-            <h4 className="navBarItem">
-                <Link 
-                    to="/about"
-                    className="navBarButton"> {"about"}
-                </Link>
-                <br></br>
-                <Link 
-                    to="/about#contact"
-                    className="navBarButton"> {"contact"}
-                </Link>
-            </h4>
-        </>
-    );
+  const revealRef = useScrollReveal<HTMLElement>();
+
+  return (
+    <main className="home" ref={revealRef}>
+      <section id="hero" className="home__hero" aria-label="Intro">
+        {/* <HeroScene /> */}
+      </section>
+
+      <section
+        id="projects"
+        className="home__projects"
+        aria-label="Projects"
+      >
+        {projects.map((project, index) => (
+          <ProjectCard
+            key={project.id}
+            project={project}
+            reversed={index % 2 === 1}
+          />
+        ))}
+      </section>
+
+      <SideProject />
+    </main>
+  );
 }
+
 

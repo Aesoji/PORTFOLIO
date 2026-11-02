@@ -1,0 +1,56 @@
+:root {
+  --grid-line: rgba(45, 45, 45, 0.35);
+  --grid-size: 32px;
+  --grid-tilt: 90deg;
+}
+
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  perspective: 700px;
+  perspective-origin: 50% 30%;
+}
+
+.grid-bg__plane {
+  position: absolute;
+  left: -50%;
+  width: 200%;
+  bottom: -20%;
+  height: 120%;
+  transform-origin: center bottom;
+  transform: rotateX(var(--grid-tilt));
+
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  background-position: center bottom;
+
+  -webkit-mask-image: linear-gradient(to top, #000 35%, transparent 90%);
+  mask-image: linear-gradient(to top, #000 35%, transparent 90%);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --grid-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --grid-size: 24px;
+  }
+
+  .grid-bg {
+    perspective: 500px;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --grid-line: rgba(45, 45, 45, 0.6);
+  }
+}

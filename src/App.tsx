@@ -1,16 +1,22 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import Home from "./pages/home/home";
 import About from "./pages/about/about";
 
+import NavBar from "./components/navigationBar/navigationBar";
+import BackgroundEffect from "./components/backgroundEffect/backgroundEffect";
+import ProjectOverview from "./components/projectOverview/projectOverview";
+import Menu from "./components/menu/menu";
+
+
 function TitleUpdater() {
-
+  
   const PAGE_TITLE: Readonly<Record<string, string>> = {
-    "/": "What is a Kenneth Jake?",
-    "/about": "Who is Kenneth Jake?",
+    "/": "KUNNIT",
+    "/about": "About KUNNIT",
   }
-
+  
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -24,7 +30,9 @@ function TitleUpdater() {
   return null;
 }
 
+
 function scrollToHashOrTop(hash: string): void {
+  
   const targetId = decodeURIComponent(hash.slice(1));
   const target = targetId ? document.getElementById(targetId) : null;
 
@@ -35,7 +43,9 @@ function scrollToHashOrTop(hash: string): void {
   }
 
   window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  
 }
+
 
 function ScrollReset() {
   
@@ -65,7 +75,8 @@ function ScrollReset() {
 
 }
 
-function App() {
+
+export default function App() {
 
   return (
       <BrowserRouter basename={import.meta.env.BASE_URL}>
@@ -77,10 +88,13 @@ function App() {
         <Routes>
           <Route path = "/" element={<Home />} />
           <Route path = "/about" element={<About />} />
+          <Route path="/projects/:id" element={<ProjectOverview />} />
         </Routes>   
+
+        <BackgroundEffect />
+        <NavBar />
+        <Menu />
 
       </BrowserRouter>
   )
 }
-
-export default App

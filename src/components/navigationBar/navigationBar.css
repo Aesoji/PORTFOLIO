@@ -1,0 +1,115 @@
+/* Uses --black, --white, --nav-active-bg from global.css */
+
+/* Fixed to the top of the screen, centered */
+.navbar-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+  z-index: 1000;
+  pointer-events: none; 
+}
+
+.navbar {
+  box-sizing: border-box;
+  pointer-events: auto;
+  background: var(--white);
+  border: 1px solid var(--black) transparent;
+  border-radius: 999px;
+  padding: 4px;
+  box-shadow:
+    0 1px 2px rgba(45, 45, 45, 0.08),
+    0 6px 16px rgba(45, 45, 45, 0.12);
+}
+
+.navbar__list {
+  position: relative; 
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar__indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 999px;
+  background-color: var(--nav-active-bg);
+  z-index: 0;
+  transition:
+    left 0.5s cubic-bezier(0.34, 1.4, 0.64, 1),
+    width 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+  will-change: left, width, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar__indicator {
+    transition: none;
+  }
+}
+
+.navbar__link {
+  position: relative;
+  z-index: 1; 
+  display: block;
+  padding: 8px 24px;
+  border-radius: 999px;
+  color: var(--black);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  opacity: 0.75;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.navbar__link:hover {
+  opacity: 1;
+  background-color: rgba(45, 45, 45, 0.06);
+}
+
+.navbar__link--active,
+.navbar__link--active:hover {
+  opacity: 1;
+  background-color: transparent;
+}
+
+.navbar__link:focus-visible {
+  outline: 2px solid var(--black);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .navbar__link {
+    padding: 8px 18px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-wrapper {
+    padding: 12px;
+  }
+
+  .navbar {
+    width: 100%;
+  }
+
+  .navbar__item {
+    flex: 1;
+  }
+
+  .navbar__link {
+    padding: 8px 0;
+    text-align: center;
+    font-size: 14px;
+  }
+}

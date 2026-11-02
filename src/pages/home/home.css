@@ -1,0 +1,101 @@
+.home {
+  display: flex;
+  flex-direction: column;
+}
+
+.home__hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh; 
+  min-height: 480px;
+  overflow: hidden;
+}
+
+.home__hero canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.home__projects {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 96px 32px 140px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(64px, 8vw, 96px);
+  scroll-margin-top: 80px; 
+}
+
+
+.home {
+  --dim-opacity: 0.1; 
+  --dim-blur: 3px;
+}
+
+.home .project,
+.home .gallery__header,
+.home .gallery__tile {
+  transition:
+    opacity 0.3s ease,
+    filter 0.3s ease;
+}
+
+@media (hover: hover) {
+  .home:has(.project .see-more:hover) .project:not(:has(.see-more:hover)),
+  .home:has(.project .see-more:hover) .gallery__header,
+  .home:has(.project .see-more:hover) .gallery__tile,
+  .home:has(.gallery__tile:hover) .project,
+  .home:has(.gallery__tile:hover) .gallery__header,
+  .home:has(.gallery__tile:hover) .gallery__tile:not(:hover) {
+    opacity: var(--dim-opacity);
+    filter: blur(var(--dim-blur));
+  }
+}
+
+.home:has(.project .see-more:focus-visible) .project:not(:has(.see-more:focus-visible)),
+.home:has(.project .see-more:focus-visible) .gallery__header,
+.home:has(.project .see-more:focus-visible) .gallery__tile,
+.home:has(.gallery__tile:focus-visible) .project,
+.home:has(.gallery__tile:focus-visible) .gallery__header,
+.home:has(.gallery__tile:focus-visible) .gallery__tile:not(:focus-visible) {
+  opacity: var(--dim-opacity);
+  filter: blur(var(--dim-blur));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home .project,
+  .home .gallery__header,
+  .home .gallery__tile {
+    transition: none;
+  }
+}
+
+
+[data-reveal-ready] [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s ease var(--reveal-delay, 0ms),
+    transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0ms);
+}
+
+[data-reveal-ready] [data-reveal][data-revealed] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 900px) {
+  .home__projects {
+    padding: 72px 24px 110px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home__projects {
+    padding: 56px 16px 88px;
+  }
+}
