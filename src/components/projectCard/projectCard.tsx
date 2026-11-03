@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { projectHref, type Project } from "../../data/projectData";
-import "./projectCard.css";
+import "./ProjectCard.css";
 
 interface Props {
   project: Project;
@@ -9,7 +9,21 @@ interface Props {
 }
 
 export default function ProjectCard({ project, reversed = false }: Props) {
-  const { id, title, subtitle, description, cover, thumbnails = [] } = project;
+  const {
+    id,
+    title,
+    subtitle,
+    description,
+    cover,
+    thumbnails = [],
+    singleImage = false,
+    transparent = false,
+    coverVideo,
+  } = project;
+
+  const reducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const alt = project.alt ?? title;
 
   return (
@@ -30,27 +44,45 @@ export default function ProjectCard({ project, reversed = false }: Props) {
       </div>
 
       <div
-        className="project__media"
+        className={`project__media ${singleImage ? "project__media--single" : ""} ${
+          transparent ? "project__media--transparent" : ""
+        }`}
         data-reveal
         style={{ "--reveal-delay": "120ms" } as CSSProperties}
       >
         <div className="project__cover">
-          {cover && <img src={cover} alt={alt} loading="lazy" />}
+          {coverVideo ? (
+            <video
+              src={coverVideo}
+              poster={cover}
+              aria-label={alt}
+              muted
+              loop
+              playsInline
+              autoPlay={!reducedMotion}
+              controls={reducedMotion}
+              preload="metadata"
+            />
+          ) : (
+            cover && <img src={cover} alt={alt} loading="lazy" />
+          )}
         </div>
 
-        <div className="project__thumbs">
-          {[0, 1, 2].map((n) => (
-            <div key={n} className="project__thumb">
-              {thumbnails[n] && (
-                <img
-                  src={thumbnails[n]}
-                  alt={`${alt} — image ${n + 1}`}
-                  loading="lazy"
-                />
-              )}
-            </div>
-          ))}
-        </div>
+        {!singleImage && (
+          <div className="project__thumbs">
+            {[0, 1, 2].map((n) => (
+              <div key={n} className="project__thumb">
+                {thumbnails[n] && (
+                  <img
+                    src={thumbnails[n]}
+                    alt={`${alt} — image ${n + 1}`}
+                    loading="lazy"
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </article>
   );

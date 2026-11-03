@@ -4,6 +4,12 @@
    Then use them below, e.g.  media: { type: "image", src: natHero }
    Leave them out and grey placeholders show instead. */
 
+import sentimentiCover from "../assets/projects/SENTIMENTI_COVER.png";
+import natCover from "../assets/projects/NAT_COVER.png";
+import igemCover from "../assets/projects/IGEM_COVER.mp4";
+
+
+
 export interface ProjectMedia {
     type: "image" | "video";
     src?: string;
@@ -42,6 +48,9 @@ export interface Project {
     description: string;
     cover?: string;
     thumbnails?: string[];
+    singleImage?: boolean;
+    coverVideo?: string;
+    transparent?: boolean;
     alt?: string;
     overview: ProjectOverview;
 }
@@ -56,8 +65,11 @@ export const projects: Project[] = [
         id: "igem",
         title: "GLEYECO",
         subtitle: "iGEM • UI/UX designer & Front-End Developer",
-        description: "Leading the project in both its design and software engineering. Transforming complex synthetic biology research into an accessible, transparent, and user-centered experience, creating multiple products that connects the science, patients, clinicians, and stakeholders.",
-        
+        description: "Leading the project in both its design and software, I was responsible for transforming the complex synthetic biology research into an accessible and user-centered experience; creating multiple products that connects the science, patients, clinicians, and stakeholders.",
+        coverVideo: igemCover,
+        singleImage: true,
+        transparent: true,
+
         overview: {
             organization: "UAlberta International Genetically Engineered Machine (iGEM) Team",
             headline: "What does science communication mean?",
@@ -93,7 +105,10 @@ export const projects: Project[] = [
         title: "NAT REDESIGN",
         subtitle: "NAT • Product Designer",
         description: "Responsible for redesigning the website to clearly communicate the company’s missions and core values. All while juggling the many audiences that the non-profit organization serves.",
-    
+        cover: natCover,
+        singleImage: true,
+        transparent: true,
+
         overview: {
             organization: "Network for Applied Technologies (NAT)",
             headline: "How to design for a diverse ecosystem?",
@@ -127,7 +142,9 @@ export const projects: Project[] = [
         title: "SENTIMENTI",
         subtitle: "FigBuild 2026 • Product Designer",
         description: "In a hypothetical scenario where one could measure and visualize an aspect of the human sensory experience unbeknownst to current technologies; we designed and proposed a new mobile app that can track one's emotions.",
-    
+        cover: sentimentiCover,
+        singleImage: true,
+
         overview: {
             organization: "FigBuild 2026",
             headline: "How to design realistic fiction?",

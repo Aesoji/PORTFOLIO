@@ -1,14 +1,22 @@
-
 .project {
+  --media-size: 1.5fr;
+  --copy-size: 1fr;
+
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, var(--copy-size)) minmax(0, var(--media-size));
   gap: clamp(32px, 4vw, 56px);
-  align-items: start;
+  align-items: center;
 }
+
+.project--reversed {
+  grid-template-columns: minmax(0, var(--media-size)) minmax(0, var(--copy-size));
+}
+
 
 .project--reversed .project__copy {
   order: 2;
 }
+
 
 .project__copy .text {
   margin-bottom: 1rem;
@@ -21,6 +29,7 @@
   gap: 4px;
 }
 
+
 .project__cover,
 .project__thumb {
   position: relative;
@@ -28,10 +37,12 @@
   background: var(--nav-active-bg);
 }
 
+
 .project__cover {
   aspect-ratio: 16 / 7;
   border-radius: 10px 10px 4px 4px;
 }
+
 
 .project__thumbs {
   display: grid;
@@ -39,20 +50,31 @@
   gap: 4px;
 }
 
+
 .project__thumb {
   aspect-ratio: 16 / 9;
   border-radius: 4px;
 }
 
+
 .project__thumb:first-child {
   border-bottom-left-radius: 10px;
 }
+
 
 .project__thumb:last-child {
   border-bottom-right-radius: 10px;
 }
 
+
+.project__media--single .project__cover {
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+}
+
+
 .project__cover img,
+.project__cover video,
 .project__thumb img {
   position: absolute;
   inset: 0;
@@ -62,19 +84,43 @@
   transition: transform 0.4s ease;
 }
 
-.project__media:hover img {
+
+.project__media--transparent .project__cover,
+.project__media--transparent .project__thumb {
+  background: transparent;
+  overflow: visible; 
+}
+
+
+.project__media--transparent .project__cover img,
+.project__media--transparent .project__thumb img {
+  object-fit: contain;
+}
+
+
+.project__media:hover img,
+.project__media:hover video {
   transform: scale(1.03);
 }
 
+
+.project__cover video {
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+
 @media (prefers-reduced-motion: reduce) {
-  .project__media:hover img {
+  .project__media:hover img,
+  .project__media:hover video {
     transform: none;
   }
 }
 
 
 @media (max-width: 900px) {
-  .project {
+  .project,
+  .project--reversed {
     grid-template-columns: 1fr;
     gap: 24px;
   }
@@ -93,6 +139,7 @@
   }
 }
 
+
 @media (max-width: 480px) {
   .project__cover {
     border-radius: 8px 8px 4px 4px;
@@ -103,4 +150,11 @@
   .project__thumb:last-child {
     border-bottom-right-radius: 8px;
   }
+  .project__media--single .project__cover {
+    border-radius: 8px;
+  }
+}
+
+.project__media--transparent img {
+  mix-blend-mode: multiply;
 }
