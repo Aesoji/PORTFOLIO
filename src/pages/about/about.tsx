@@ -183,50 +183,48 @@ export default function About() {
         </div>
 
         <div className="about__copy">
+          
           <h1 className="title">What is a Kenneth?</h1>
+          <h3 className="h3">Product Designer and Front-End Developer.</h3>
 
-          <h3 className="h3">Product Designer and front-end developer.</h3>
           <p className="text">
-            Holding a Bachelor of Science in Computing Science &amp; Psychology
-            (yes, it's a double major) from the University of Alberta, I like
-            designing <strong><em>with</em></strong> the user, making products
-            that people actually use, and seeing their stories come to fruition.
-            The front-end developer part? I was a bit tired of not being able to
-            truly output what I wanted, so I decided to just learn it myself.{" "}
-            <WaveText>
-              As such, I am a designer who happens to know how to code.
+            Holding a Bachelor of Science in Computing Science &amp; Psychology (yes, it's a double major) 
+            from the University of Alberta, I like designing <strong><em>with</em></strong> the user, making 
+            products that people actually use, and seeing their stories come to fruition. The front-end developer part? 
+            What started off as a passion for scripting video games on Roblox has now turned into my love for
+            designing from ideation to actualization.{" "}
+            <WaveText> 
+              As such, I am a designer who happens to know how to code. 
             </WaveText>
           </p>
 
           <p className="text">
-            Nowadays, I often communicate between different sub-teams, being the
-            communicative bridge, translating the direction and feasibility of
-            each project I'm involved in. For me, this works out great, because
-            I get to continue doing what I love and people don't end up ripping
-            themselves apart from miscommunication in the process.
+            Nowadays, I am often the communicative bridge between different disciplines, 
+            responsible for translating the project's direction, feasibility, and progress. 
+            For me, this works out great, because I get to continue doing what I love 
+            and people don't end up ripping themselves apart because of miscommunication. 
           </p>
+
         </div>
       </section>
 
       <section className="about__row">
         <div className="about__copy">
+          
           <h3 className="h3">Outside of the 9-5</h3>
           <p className="text">
-            In my spare time, I like to continue my storytelling passion through
-            other forms of media. Specifically, it is through photography,
-            graphic design, and making videos that I have learnt (and will
-            continue to learn) how to use mixed media to bring stories to life
-            in other creative ways.
+            Outside of the grind, I like immersing myself in music, whether it's
+            through dance, singing (really terribly), or playing my flute. The day
+            that I learn to play Flight of the Bumblebee,{" "}
+            <strong>it's over for everyone.</strong>
           </p>
-          <p className="text">
-            I also like playing the flute. The day that I learn to play flight
-            of the bumblebee, <strong>it's over for everyone.</strong>
-          </p>
+
           <p className="text">
             I also like learning languages. I apologize in advance for going on
             linguistic tangents or wanting to test my (absolutely terrible)
             language skills with you.
           </p>
+
         </div>
 
         <div className="bento" ref={bento.ref}>

@@ -7,6 +7,7 @@
   gap: 96px;
 }
 
+
 .about__row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
@@ -17,6 +18,7 @@
 .about__copy .text:last-child {
   margin-bottom: 0;
 }
+
 
 .tile {
   position: relative;
@@ -46,13 +48,14 @@
   color: var(--black);
 }
 
+
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(8px, 1.4vw, 16px);
 }
 
-
+              
 .bento {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -87,7 +90,7 @@
 }
 
 .wave__word {
-  display: inline-block; 
+  display: inline-block;
   white-space: pre;
 }
 
@@ -129,12 +132,11 @@
   }
 
   .about__copy {
-    order: -1;
+    order: 2;
     max-width: 640px;
   }
 }
 
-/* Phone */
 @media (max-width: 480px) {
   .about {
     padding: 100px 16px 72px;
@@ -166,6 +168,7 @@
     transition: opacity 0.3s ease;
   }
 }
+
 
 .bento .tile:hover img {
   transform: none;
@@ -212,6 +215,7 @@
   outline: 2px solid var(--black);
   outline-offset: 3px;
 }
+
 
 @media (max-width: 480px) {
   .tile__caption {
