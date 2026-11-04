@@ -1,3 +1,6 @@
+/* Uses --black, --white, --nav-bg, --nav-active-bg from global.css */
+
+/* Same width + side spacing as the projects section */
 .gallery {
   width: 100%;
   max-width: 1100px;
@@ -14,6 +17,7 @@
   margin-bottom: 0.25rem;
 }
 
+/* ---------- Grid ---------- */
 .gallery__grid {
   list-style: none;
   margin: 0;
@@ -39,7 +43,9 @@
   outline-offset: 3px;
 }
 
+/* Hover fading is handled in Home.css (shared with the projects) */
 
+/* ---------- Media boxes ---------- */
 .gallery-media {
   position: relative;
   overflow: hidden;
@@ -69,6 +75,7 @@
   transform: scale(1.03);
 }
 
+/* ---------- + button with sliding title ---------- */
 .gallery__plus {
   position: absolute;
   right: 12px;
@@ -112,10 +119,11 @@
   opacity: 1;
 }
 
+/* ---------- Expanded view ---------- */
 .lightbox {
   position: fixed;
   inset: 0;
-  z-index: 2000; 
+  z-index: 2000; /* above the navbar and floating menu */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -149,6 +157,7 @@
   height: auto;
   max-height: 65vh;
   object-fit: contain;
+  object-position: left center; /* line up with the title + description below */
 }
 
 .lightbox__caption {
@@ -220,6 +229,7 @@
   }
 }
 
+/* The tile → wide image morph */
 ::view-transition-group(gallery-media) {
   animation-duration: 0.5s;
   animation-timing-function: cubic-bezier(0.2, 0.9, 0.25, 1);
@@ -242,6 +252,7 @@
   }
 }
 
+/* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .gallery {
     padding: 0 24px 110px;

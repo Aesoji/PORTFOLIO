@@ -1,3 +1,7 @@
+import bybynVideo from "../assets/projects/BYBYN.mp4";
+import bybynPoster from "../assets/projects/bybyn_poster.png";
+
+
 export interface GalleryMedia {
   type: "image" | "video";
   src?: string;
@@ -22,7 +26,7 @@ export const gallery: GalleryItem[] = [
     title: "BYBN",
     year: "2025",
     description: "Tagalog to Baybayin",
-    media: { type: "image" },
+    media: { type: "video", src: bybynVideo, poster: bybynPoster},
     // link: { label: "Open", href: "#" },
   },
   {
