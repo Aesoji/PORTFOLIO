@@ -191,8 +191,8 @@ export default function About() {
             Holding a Bachelor of Science in Computing Science &amp; Psychology (yes, it's a double major) 
             from the University of Alberta, I like designing <strong><em>with</em></strong> the user, making 
             products that people actually use, and seeing their stories come to fruition. The front-end developer part? 
-            What started off as a passion for scripting video games on Roblox has now turned into my love for
-            designing from ideation to actualization.{" "}
+            What started off as a passion for building and scripting games on Roblox has now turned into my love for
+            developing products from ideation to actualization.{" "}
             <WaveText> 
               As such, I am a designer who happens to know how to code. 
             </WaveText>
