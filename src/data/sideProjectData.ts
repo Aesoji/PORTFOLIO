@@ -1,5 +1,5 @@
 import bybynVideo from "../assets/projects/BYBYN.mp4";
-import bybynPoster from "../assets/projects/bybyn_poster.png";
+import bybynPoster from "../assets/projects/BYBYN_POSTER.png";
 
 
 export interface GalleryMedia {
