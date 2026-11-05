@@ -24,3 +24,5 @@ export const tools: Tool[] = [
   { name: "React", logo: reactLogo },
   { name: "Figma", logo: figmaLogo },
 ];
+
+/* Comment added just bc */
