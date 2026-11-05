@@ -12,7 +12,7 @@ const LINKS: NavLinkItem[] = [
   { id: "home", label: "home", href: "/" },
   { id: "projects", label: "projects", href: "/#projects" },
   { id: "about", label: "about", href: "/about" },
-  { id: "resume", label: "resume", href: "/#resume" },
+  { id: "resume", label: "resume", href: "/resume" },
 ];
 
 

@@ -1,7 +1,16 @@
 import sentimentiCover from "../assets/projects/SENTIMENTI_COVER.gif";
 import sentimentiHeader from "../assets/projects/SENTIMENTI_HEADER.png";
+import sentimentiTimeline from "../assets/projects/SENTIMENTI_TIMELINE.png";
+import sentimentiPrototype from "../assets/projects/SENTIMENTI_PROTOTYPE.png";
+import sentimentiPrototype_V2 from "../assets/projects/SENTIMENTI_PROTOTYPE_V2.png";
+
+
 import natCover from "../assets/projects/NAT_COVER.png";
 import natHeader from "../assets/projects/NAT_HEADER.png";
+import natPersonas from "../assets/projects/NAT_PERSONAS.png";
+import natUserflow from "../assets/projects/NAT_USERFLOW.png";
+import natPrototype from "../assets/projects/NAT_PROTOTYPE.png";
+
 import igemCover from "../assets/projects/IGEM_COVER.mp4";
 import igemHeader from "../assets/projects/IGEM_HEADER.png";
 
@@ -253,7 +262,7 @@ export const projects: Project[] = [
                 "The redesign needed to prioritize clear communication of NAT's mission and its value. Stakeholders had to be guided to the sections relevant to them, and calls to action needed to be specific to their field and what they can do.",
                 "That meant clarifying NAT's value proposition (what NAT does, who it serves, and the value it provides to participants, partners, and potential funders) and demonstrating its measurable impact. Interdisciplinary innovation is at the forefront of NAT's messaging, but the website also had to preserve its STEM foundation.",
               ],
-              media: { type: "image" },
+              media: { type: "image", src: natUserflow },
             },
             {
               title: "The Perspectives",
@@ -261,12 +270,12 @@ export const projects: Project[] = [
                 "NAT's vision is to break the barriers of division and isolation, and foster an emerging ecosystem whose members can ultimately benefit from one another. The redesign had to speak to each of them: industry partners looking to fund solutions to real-world problems; NPO and ecosystem partners like accelerators and incubators interested in collaborating and exchanging resources; government and institutional funders looking to invest in innovation and see tangible outcomes; and youth interested in hackathons and workshops to grow their skills as young innovators.",
                 "The website also had to serve NAT's internal team, with a manageable content publishing system, event management capabilities, and documentation to support ongoing maintenance.",
               ],
-              media: { type: "image" },
+              media: { type: "image", src: natPersonas },
             },
           ],
         },
         {
-          title: "The High Fidelity",
+          title: "",
           blocks: [
             {
               title: "What is Addressed",
@@ -274,7 +283,7 @@ export const projects: Project[] = [
                 "The end result is a modern, accessible, and mobile-friendly website that serves as both a clear introduction to what NAT is and a strategic platform to engage stakeholder interest.",
                 "[TO WRITE] Walk through the key screens: how does each one address the pain points and stakeholders above?",
               ],
-              media: { type: "image" },
+              media: { type: "image", src: natPrototype},
               layout: "wide",
             },
           ],
@@ -357,12 +366,13 @@ export const projects: Project[] = [
                 "Sentimenti is built around clairempathy: the ability to perceive and understand emotions through visualization. Emotions are deeply personal and difficult to quantify, so FIGBUILD 2026 challenged us to rethink how people recognize and respond to their emotional states.",
                 "[TO WRITE] What was the exact FIGBUILD prompt, and who is Sentimenti designed for?",
               ],
-              media: { type: "image" },
+              media: { type: "image", src: sentimentiTimeline},
+              layout: "wide",
             },
           ],
         },
         {
-          title: "The High Fidelity",
+          title: "",
           blocks: [
             {
               title: "The Prototype",
@@ -370,9 +380,18 @@ export const projects: Project[] = [
                 "Our speculative emotional wellness tool translates physiological signals, such as heart rate and stress indicators, into intuitive visual and sensory feedback. Rather than showing users everything, each screen focuses on helping them recognize what actually matters.",
                 "[TO WRITE] Walk through the key screens of the prototype and the design decisions behind them.",
               ],
-              media: { type: "video", autoplay: true },
+              media: { type: "image", src: sentimentiPrototype },
               layout: "wide",
             },
+            {
+              title: "The Prototype",
+              paragraphs: [
+                "Our speculative emotional wellness tool translates physiological signals, such as heart rate and stress indicators, into intuitive visual and sensory feedback. Rather than showing users everything, each screen focuses on helping them recognize what actually matters.",
+                "[TO WRITE] Walk through the key screens of the prototype and the design decisions behind them.",
+              ],
+              media: { type: "image", src: sentimentiPrototype_V2 },
+              layout: "wide",
+            }
           ],
         },
       ],

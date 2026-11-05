@@ -3,18 +3,18 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import Home from "./pages/home/home";
 import About from "./pages/about/about";
+import Resume from "./pages/resume/resume";
 
 import NavBar from "./components/navigationBar/navigationBar";
 import BackgroundEffect from "./components/backgroundEffect/backgroundEffect";
 import ProjectOverview from "./components/projectOverview/projectOverview";
-import Menu from "./components/menu/menu";
-
 
 function TitleUpdater() {
   
   const PAGE_TITLE: Readonly<Record<string, string>> = {
     "/": "KUNNIT",
     "/about": "About KUNNIT",
+    "/resume": "Résumé KUNNIT",
   }
   
   const { pathname } = useLocation();
@@ -89,11 +89,11 @@ export default function App() {
           <Route path = "/" element={<Home />} />
           <Route path = "/about" element={<About />} />
           <Route path="/projects/:id" element={<ProjectOverview />} />
+          <Route path="/resume" element={<Resume />} />
         </Routes>   
 
         <BackgroundEffect />
         <NavBar />
-        <Menu />
 
       </BrowserRouter>
   )
