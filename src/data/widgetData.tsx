@@ -3,7 +3,7 @@ import indesignLogo from "../assets/tools/Adobe_Indesign.webp";
 import photoshopLogo from "../assets/tools/Adobe_Photoshop.webp";
 import affinityLogo from "../assets/tools/Affinity.webp";
 import blenderLogo from "../assets/tools/Blender.webp";
-import davinciLogo from "../assets/tools/DaVinci_Resolve.png";
+import davinciLogo from "../assets/tools/Davinci_Resolve.png";
 import figmaLogo from "../assets/tools/Figma.png";
 import procreateLogo from "../assets/tools/Procreate.webp";
 import reactLogo from "../assets/tools/React.png";
