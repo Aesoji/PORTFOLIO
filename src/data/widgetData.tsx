@@ -13,7 +13,7 @@ export interface Tool {
   logo: string;
 }
 
-export const tools: Tool[] = [
+export const tools: Tool[] = [ 
   { name: "Adobe Photoshop", logo: photoshopLogo },
   { name: "Adobe Illustrator", logo: illustratorLogo },
   { name: "Adobe InDesign", logo: indesignLogo },
@@ -25,4 +25,3 @@ export const tools: Tool[] = [
   { name: "Figma", logo: figmaLogo },
 ];
 
-/* Comment added just bc */
