@@ -1,11 +1,11 @@
 import { useId, type CSSProperties } from "react";
 import { Link, useParams } from "react-router-dom";
+import ZoomableImage from "../../components/zoomableImage/zoomableImage";
 import {
   projects,
   type CaseStudyBlock,
   type CaseStudySection,
   type ProjectMedia,
-  type TextBlock,
 } from "../../data/projectData";
 import "./projectOverview.css";
 
@@ -29,19 +29,29 @@ function getSummaryStyle(colors?: string[]): CSSProperties | undefined {
   return { "--summary-gradient": gradient } as CSSProperties;
 }
 
+const LAYOUT_CLASS = {
+  side: "cs-block--side",
+  wide: "cs-block--wide",
+  full: "cs-block--full",
+};
+
 /* Builds the class list for a case study block */
 function getBlockClassName(block: CaseStudyBlock, reversed: boolean): string {
   const classNames = ["cs-block"];
 
   if (block.media) {
-    const layoutClass = block.layout === "wide" ? "cs-block--wide" : "cs-block--side";
-    classNames.push(layoutClass);
+    classNames.push(LAYOUT_CLASS[block.layout ?? "side"]);
   }
   if (reversed) {
     classNames.push("cs-block--reversed");
   }
 
   return classNames.join(" ");
+}
+
+/* A stable React key for blocks, which may have no title */
+function getBlockKey(block: CaseStudyBlock): string {
+  return block.title ?? block.media?.alt ?? block.paragraphs?.[0] ?? "block";
 }
 
 /* ---------- Image or video ---------- */
@@ -70,7 +80,7 @@ function MediaContent({ media, alt }: MediaContentProps) {
     );
   }
 
-  return <img src={media.src} alt={alt} loading="lazy" />;
+  return <ZoomableImage src={media.src ?? ""} alt={alt} />;
 }
 
 type OverviewMediaProps = Readonly<{
@@ -91,28 +101,6 @@ function OverviewMedia({ media, fallbackAlt, className = "" }: OverviewMediaProp
   );
 }
 
-/* ---------- Summary ---------- */
-
-type SummaryListProps = Readonly<{
-  title: string;
-  items: TextBlock[];
-}>;
-
-/* A gradient card with a heading and a list of titled paragraphs */
-function SummaryList({ title, items }: SummaryListProps) {
-  return (
-    <div className="summary-card">
-      <h3 className="h2">{title}</h3>
-      {items.map((item) => (
-        <div key={item.title} className="summary__item">
-          <h4 className="summary__item-title">{item.title}</h4>
-          <p className="text">{item.text}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 /* ---------- Case study ---------- */
 
 type CaseStudyBlockViewProps = Readonly<{
@@ -121,20 +109,25 @@ type CaseStudyBlockViewProps = Readonly<{
 }>;
 
 function CaseStudyBlockView({ block, reversed }: CaseStudyBlockViewProps) {
+  const paragraphs = block.paragraphs ?? [];
+  const hasText = Boolean(block.title) || paragraphs.length > 0;
+
   return (
     <div className={getBlockClassName(block, reversed)}>
       {block.media ? (
-        <OverviewMedia media={block.media} fallbackAlt={block.title} />
+        <OverviewMedia media={block.media} fallbackAlt={block.title ?? "Project image"} />
       ) : null}
 
-      <div className="cs-block__text">
-        <h3 className="h2">{block.title}</h3>
-        {block.paragraphs.map((paragraph) => (
-          <p key={paragraph} className="text">
-            {paragraph}
-          </p>
-        ))}
-      </div>
+      {hasText ? (
+        <div className="cs-block__text">
+          {block.title ? <h3 className="h2">{block.title}</h3> : null}
+          {paragraphs.map((paragraph) => (
+            <p key={paragraph} className="text">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -147,15 +140,17 @@ function CaseStudySectionView({ section }: CaseStudySectionViewProps) {
   const headingId = useId();
 
   return (
-    <section className="cs-section" aria-labelledby={headingId}>
-      <h2 id={headingId} className="h1 cs-section__title">
-        {section.title}
-      </h2>
+    <section className="cs-section" aria-labelledby={section.title ? headingId : undefined}>
+      {section.title ? (
+        <h2 id={headingId} className="h1 cs-section__title">
+          {section.title}
+        </h2>
+      ) : null}
 
       <div className="cs-section__blocks">
         {section.blocks.map((block, index) => (
           <CaseStudyBlockView
-            key={block.title}
+            key={getBlockKey(block)}
             block={block}
             reversed={index % 2 === 1} // every second block flips sides
           />
@@ -190,7 +185,6 @@ export default function ProjectOverview() {
   }
 
   const { title, overview } = project;
-  const techniques = overview.techniques ?? [];
   const caseStudy = overview.caseStudy ?? [];
 
   return (
@@ -206,7 +200,6 @@ export default function ProjectOverview() {
         className="overview-media--hero"
       />
 
-      {/* ---------- Summary ---------- */}
       <section
         className="summary"
         style={getSummaryStyle(overview.summaryColors)}
@@ -216,22 +209,25 @@ export default function ProjectOverview() {
           <h2 id="summary-heading" className="h1 summary__title">
             Project Summary
           </h2>
-
-          <h3 className="h2">Role Overview</h3>
-          <p className="text">{overview.goal}</p>
-        </div>
-
-        <div className="summary__columns">
-          {techniques.length > 0 ? (
-            <SummaryList title="Techniques" items={techniques} />
-          ) : null}
-          <SummaryList title="Reflection" items={overview.reflection} />
+          {overview.summary.map((part) => (
+            <div key={part.title} className="summary__part">
+              <h3 className="h2">{part.title}</h3>
+              {part.paragraphs.map((paragraph) => (
+                <p key={paragraph} className="text">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          ))}
         </div>
       </section>
 
       {/* ---------- Full case study ---------- */}
       {caseStudy.map((section) => (
-        <CaseStudySectionView key={section.title} section={section} />
+        <CaseStudySectionView
+          key={section.title ?? getBlockKey(section.blocks[0])}
+          section={section}
+        />
       ))}
     </main>
   );

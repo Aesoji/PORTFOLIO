@@ -9,19 +9,19 @@ import procreateLogo from "../assets/tools/Procreate.webp";
 import reactLogo from "../assets/tools/React.png";
 
 export interface Tool {
-  name: string;
-  logo: string;
+    name: string;
+    logo: string; 
 }
 
 export const tools: Tool[] = [ 
-  { name: "Adobe Photoshop", logo: photoshopLogo },
-  { name: "Adobe Illustrator", logo: illustratorLogo },
-  { name: "Adobe InDesign", logo: indesignLogo },
-  { name: "Affinity", logo: affinityLogo },
-  { name: "Blender", logo: blenderLogo },
-  { name: "DaVinci Resolve", logo: davinciLogo },
-  { name: "Procreate", logo: procreateLogo },
-  { name: "React", logo: reactLogo },
-  { name: "Figma", logo: figmaLogo },
+    { name: "✨ We know how to use Adobe Photoshop.", logo: photoshopLogo },
+    { name: "Adobe Illustrator", logo: illustratorLogo },
+    { name: "Adobe InDesign", logo: indesignLogo },
+    { name: "Affinity", logo: affinityLogo },
+    { name: "Blender", logo: blenderLogo },
+    { name: "Figma", logo: figmaLogo },
+    { name: "Procreate", logo: procreateLogo },
+    { name: "DaVinci Resolve", logo: davinciLogo },
+    { name: "React", logo: reactLogo },
 ];
 

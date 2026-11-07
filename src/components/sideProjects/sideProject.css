@@ -1,6 +1,3 @@
-/* Uses --black, --white, --nav-bg, --nav-active-bg from global.css */
-
-/* Same width + side spacing as the projects section */
 .gallery {
   width: 100%;
   max-width: 1100px;
@@ -17,7 +14,6 @@
   margin-bottom: 0.25rem;
 }
 
-/* ---------- Grid ---------- */
 .gallery__grid {
   list-style: none;
   margin: 0;
@@ -43,11 +39,9 @@
   outline-offset: 3px;
 }
 
-/* Hover fading is handled in Home.css (shared with the projects) */
-
-/* ---------- Media boxes ---------- */
 .gallery-media {
   position: relative;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
   border-radius: 10px;
 }
@@ -56,17 +50,18 @@
   background: var(--nav-active-bg);
 }
 
-.gallery-media--tile {
-  aspect-ratio: 1 / 1;
+.gallery-media img,
+.gallery-media video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .gallery-media--tile img,
 .gallery-media--tile video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   transition: transform 0.4s ease;
 }
 
@@ -75,7 +70,6 @@
   transform: scale(1.03);
 }
 
-/* ---------- + button with sliding title ---------- */
 .gallery__plus {
   position: absolute;
   right: 12px;
@@ -112,18 +106,17 @@
     padding 0.4s ease;
 }
 
-.gallery__plus:hover .gallery__plus-label,
+.gallery__tile:hover .gallery__plus-label,
 .gallery__tile:focus-visible .gallery__plus-label {
   max-width: 260px;
   padding-left: 14px;
   opacity: 1;
 }
 
-/* ---------- Expanded view ---------- */
 .lightbox {
   position: fixed;
   inset: 0;
-  z-index: 2000; /* above the navbar and floating menu */
+  z-index: 2000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,29 +128,21 @@
   animation: lightbox-fade 0.3s ease;
 }
 
+.lightbox__backdrop {
+  position: fixed;
+  inset: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: default;
+}
+
 .lightbox__content {
-  width: min(980px, 100%);
-  margin: auto 0;
+  position: relative;
+  width: min(980px, 100%, calc((100dvh - 300px) * 1.5));
+  min-width: min(280px, 100%);
+  margin: auto;
   color: var(--white);
-}
-
-.gallery-media--full {
-  width: 100%;
-  border-radius: 6px;
-}
-
-.gallery-media--full.gallery-media--empty {
-  aspect-ratio: 16 / 7;
-}
-
-.gallery-media--full img,
-.gallery-media--full video {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 65vh;
-  object-fit: contain;
-  object-position: left center; /* line up with the title + description below */
 }
 
 .lightbox__caption {
@@ -197,6 +182,7 @@
 
 .lightbox__close {
   position: fixed;
+  z-index: 1;
   top: 20px;
   right: 20px;
   display: grid;
@@ -229,7 +215,6 @@
   }
 }
 
-/* The tile → wide image morph */
 ::view-transition-group(gallery-media) {
   animation-duration: 0.5s;
   animation-timing-function: cubic-bezier(0.2, 0.9, 0.25, 1);
@@ -252,7 +237,6 @@
   }
 }
 
-/* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .gallery {
     padding: 0 24px 110px;
@@ -282,13 +266,12 @@
     font-size: 13px;
   }
 
-  .lightbox {
-    padding: 72px 16px 32px;
+  .gallery__grid {
+    grid-template-columns: 1fr;
   }
 
-  .gallery-media--full img,
-  .gallery-media--full video {
-    max-height: 55vh;
+  .lightbox {
+    padding: 72px 16px 32px;
   }
 
   .lightbox__close {

@@ -168,7 +168,6 @@ export default function ToolsWidget() {
               key={tool.name}
               ref={registerPiece(TITLE_WORDS.length + index)}
               className="tools__piece tools__tile"
-              title={tool.name}
             >
               <img className="tools__logo" src={tool.logo} alt="" draggable={false} />
             </span>
