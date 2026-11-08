@@ -7,7 +7,7 @@
 }
 
 .overview .text {
-  line-height: 3.0;
+  line-height: 3;
 }
 
 .overview--missing {
@@ -25,6 +25,13 @@
 .overview__headline {
   text-transform: none;
   margin-bottom: 1.5rem;
+}
+
+.overview__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: -0.5rem 0 1.5rem;
 }
 
 .overview-media {
@@ -126,9 +133,9 @@
 }
 
 .cs-section__title {
-  text-align: center;
-  font-weight: 500;
-  margin-bottom: clamp(16px, 3vw, 28px);
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: clamp(16px, 3vw, 24px);
 }
 
 .cs-section__blocks {
@@ -152,7 +159,7 @@
   align-items: center;
 }
 
-.cs-block--side .overview-media {
+.cs-block--side .overview-media:empty {
   aspect-ratio: 4 / 3;
 }
 
@@ -177,10 +184,18 @@
   aspect-ratio: 14 / 6;
 }
 
+.cs-block--side .overview-media .zoomable,
+.cs-block--side .overview-media img,
+.cs-block--side .overview-media video,
 .cs-block--full .overview-media .zoomable,
-.cs-block--full .overview-media img {
+.cs-block--full .overview-media img,
+.cs-block--full .overview-media video {
   position: static;
   height: auto;
+}
+
+.cs-section__blocks > .cs-block--full:not(:has(.cs-block__text)) {
+  margin-top: calc(clamp(32px, 4vw, 48px) / -2);
 }
 
 @media (max-width: 900px) {

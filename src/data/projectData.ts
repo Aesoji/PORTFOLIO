@@ -1,16 +1,3 @@
-/* ============================================================
-   PROJECTS — all content lives here.
-
-   Home page card     → title, subtitle, description, cover…
-   Case study page    → everything inside `overview`
-                        (lives at /projects/<id>)
-
-   Images / videos: import them at the top of this file, then use
-   them as `src`. Leave `src` out and a grey placeholder shows.
-     image: { type: "image", src: myImage, alt: "What it shows" }
-     video: { type: "video", src: myVideo, autoplay: true }
-   ============================================================ */
-
 import sentimentiCover from "../assets/projects/SENTIMENTI_COVER.gif";
 import sentimentiHeader from "../assets/projects/SENTIMENTI_HEADER.png";
 import sentimentiTimeline from "../assets/projects/SENTIMENTI_TIMELINE.png";
@@ -25,27 +12,29 @@ import natPrototype from "../assets/projects/NAT_PROTOTYPE.png";
 
 import igemCover from "../assets/projects/IGEM_COVER.mp4";
 import igemHeader from "../assets/projects/IGEM_HEADER.png";
+import gleyecoBrandIdentity from "../assets/projects/GLEYECO_BRAND_IDENTITY.png";
+import gleyecoBuddies from "../assets/projects/GLEYECOBUDDIES.png";
+import igemNavbar from "../assets/projects/GLEYECO_NAVIGATION_BAR.mp4";
+import igemPopup from "../assets/projects/GLEYECO_POP.mp4";
+import igemCitations from "../assets/projects/GLEYECO_CITATIONS.mp4";
 
-/* ---------- Types ---------- */
 
 export interface ProjectMedia {
   type: "image" | "video";
-  src?: string;
-  /** Video only: still frame shown before it plays */
+  src?: string; 
   poster?: string;
-  /** Describes the image/video for screen readers */
-  alt?: string;
-  /** Video only: true = plays silently on a loop, no controls */
+  alt?: string;  
   autoplay?: boolean;
+  zoom?: boolean;
 }
 
-/** A titled piece of text, e.g. "Role Overview" in the summary */
+
 export interface TextSection {
   title: string;
   paragraphs: string[];
 }
 
-/** One part of a case study section. Use any mix of title, text and media. */
+
 export interface CaseStudyBlock {
   title?: string;
   paragraphs?: string[];
@@ -56,28 +45,31 @@ export interface CaseStudyBlock {
   layout?: "side" | "wide" | "full";
 }
 
-/** A case study section, e.g. "The Research". The title is optional. */
+
 export interface CaseStudySection {
   title?: string;
   blocks: CaseStudyBlock[];
 }
 
+
+export interface ProjectLink {
+  label: string;
+  href: string;
+}
+
+
 export interface ProjectOverview {
   organization: string;
   headline: string;
-  /** Big image/video under the headline (14:6) */
-  media?: ProjectMedia;
-  /** Gradient colours behind the summary: two or more, spread evenly
-      from the top-right to the bottom-left. Leave out for the default. */
+  links?: ProjectLink[];
+  media?: ProjectMedia;  
   summaryColors?: string[];
-  /** Shown together on the soft gradient card under "Project Summary" */
   summary: TextSection[];
-  /** The full case study, shown under the summary */
   caseStudy?: CaseStudySection[];
 }
 
+
 export interface Project {
-  /** Unique id — also the URL: /projects/<id> */
   id: string;
   title: string;
   subtitle: string;
@@ -91,12 +83,16 @@ export interface Project {
   overview: ProjectOverview;
 }
 
-/** Link to a project's case study page */
+
 export const projectHref = (project: Project) => `/projects/${project.id}`;
 
-/* Sections still to be written are marked [TO WRITE] — search for it to find them all */
 
-/* ---------- Projects ---------- */
+const HEADING = {
+  roleOverview: "Role Overview",
+  usabilityMethods: "Usability Testing Methods",
+  reflection: "Reflection",
+};
+
 
 export const projects: Project[] = [
   {
@@ -112,64 +108,47 @@ export const projects: Project[] = [
     overview: {
       organization: "UAlberta International Genetically Engineered Machine (iGEM) Team",
       headline: "What does science communication mean?",
-      media: { type: "image", src: igemHeader },
-      summaryColors: ["#B7BBF4", "#F1D5A4", "#F9C0C0"],
+      links: [{ label: "see the actual site", href: "https://2026.igem.wiki/ualberta/" }],
+      media: { type: "image", src: igemHeader, alt: "gleyeco website and branding", zoom: false },
+      summaryColors: ["#bfc2e7", "#E1E1E1", "#f7d5d5"],
 
       summary: [
         {
-          title: "Project Goal",
+          title: HEADING.roleOverview,
           paragraphs: [
-            "In an effort to propose a better solution to tackling dry eye disease, our team developed gleyeco, a potential alternative to current eye drop and contact lens therapeutics. As their UI/UX Designer & Front-End Developer, my role was to translate an incredibly complex scientific concept into an accessible and intuitive website that can be accessed and understood by any individual irrespective of their education background. We needed to communicate the science behind the product, explain the research and development process, and build confidence in the project's potential among a diverse audience. This meant finding the balance between scientific accuracy and accessible communication. Through both the project's brand identity and website, I was responsible for making the science approachable and cohesive without oversimplifying it.",
+            "In an effort to propose a better solution to tackling dry eye disease, our team developed gleyeco. As their UI/UX Designer & Front-End Developer, my role was to translate an incredibly complex scientific concept into an accessible, intuitive, and transparent website that can be accessed and understood by any individual irrespective of their education background.",
+            "We needed to communicate the science behind the product, explain the research and development process, and build confidence in the project's potential among very different audiences: patients, clinicians, researchers, and potential investors.",
+            "This meant finding the balance between scientific accuracy and accessible communication. Through both the project's brand identity and website, I was responsible for making the science approachable and cohesive without oversimplifying it.",
+          ],
+        },
+        {
+          title: "Usability Testing Method",
+          paragraphs: [
+            "Concurrent Think Aloud was used. [TO WRITE] Who took part, what tasks did they do while thinking aloud, and what did you learn?",
           ],
         },
       ],
 
-
       caseStudy: [
         {
-          title: "The Context",
+          title: "Science Communication",
           blocks: [
             {
-              title: "What is iGEM?",
+              title: "What is the Challenge?",
               paragraphs: [
-                "In the realm of synthetic biology, the International Genetically Engineered Machine (abbreviated as iGEM because that is a mouthful) is a renowned international not-for-profit organization that fosters the synthetic biology community. Their mission is to help solve real-world problems using synthetic biology through interdisciplinary education and collaboration, all with a spice of competition.",
-                "Our team decided to tackle dry eye disease; more specifically, developing and proposing a new approach to enhance an eye-dropper's specificity and retention. That means people apply eye drops less often, saving them both time and money.",
+                "[TO WRITE] This section repeated the Role Overview word for word, so it was left out. Describe the challenge in your own words here.",
               ],
-              media: { type: "image" },
-            },
-          ],
-        },
-        {
-          title: "UI/UX & Usability Testing",
-          blocks: [
-            {
-              title: "Challenge #1: Making the science understandable",
-              paragraphs: [
-                "To admit, the details of our project are complex, and those without a foundational understanding of glycobiology, or even just general biology, will have a difficult time understanding the information. If our team aspires to market this project, it is our responsibility to translate the science and project details with full transparency.",
-                "Effectively sharing this information with patients, clinicians, investors, and other researchers is vital to ensuring everyone knows our project's values. More importantly, we needed to communicate what problem we are tackling, what our proposed solution is, and prove that gleyeco is a viable product, clear to market and safe to use.",
-              ],
-              media: { type: "image" },
             },
             {
-              title: "Challenge #2: Showing the rationale",
+              title: "Challenge #1",
               paragraphs: [
-                "Then, there is the nitty-gritty of the project. How are we developing an eye-dropper, let alone from scratch? What are the 'ingredients', and how did we fact-check the usability and safety? What are the limitations of our approach, and do they affect marketability?",
-                "Our rationale behind every lab decision needed to be transparent and grounded in research, especially since our intention is to bring gleyeco beyond the lab.",
+                "To admit, the details of our project are complex, and those without a foundational understanding of glycobiology, or even just general biology, will have a difficult time understanding the information. If our team aspires to market this project, it is our responsibility to translate the science and project details with full transparency. Effectively sharing this information with patients, clinicians, investors, and other researchers is vital to ensuring everyone knows our project's values. Though, more importantly, we needed to communicate what problem we are tackling, what our proposed solution is, and prove that gleyeco is a viable product, clear to market and safe to use.",
               ],
-              media: { type: "image" },
             },
             {
-              title: "The Solution",
+              title: "Challenge #2",
               paragraphs: [
-                "[TO WRITE] How does the website solve Challenges #1 and #2? Describe the key pages or features (e.g. how the science is explained, where the research and limitations are shown) and why you designed them that way.",
-              ],
-              media: { type: "image" },
-              layout: "wide",
-            },
-            {
-              title: "Usability Testing Results",
-              paragraphs: [
-                "[TO WRITE] Who did you test with (patients, clinicians, researchers?), what tasks did you give them, what did you find, and what did you change because of it?",
+                "Then, there is the nitty-gritty of the project. How are we developing an eye-dropper, let alone from scratch? What are the 'ingredients' and how did we fact-check the usability and safety? What are the limitations of our approach, and do they affect marketability? Our rationale in every lab decision made needs to be transparent and grounded in research, especially since our intention is to bring gleyeco beyond the lab.",
               ],
             },
           ],
@@ -180,47 +159,85 @@ export const projects: Project[] = [
             {
               title: "The Logo",
               paragraphs: [
-                "[TO WRITE] What does the gleyeco logo represent, and how did it evolve from your first sketches?",
+                "The gleyeco logo and branding are designed to be intuitive: an eye with a sparkling star embodying the pupil. More hidden is the hexagonal eye's shine. Since glycans contain hexagonal structures, the hexagon represents our glycan-based construct entering an eye. Taking inspiration from the visual language of glycans, which employs clear representative diagrams, simple shapes became the defining feature of our project's aesthetics.",
               ],
-              media: { type: "image" },
-              layout: "wide",
             },
             {
-              title: "Colour & Typography",
+              title: "Colour",
               paragraphs: [
-                "[TO WRITE] Which colours and typefaces did you choose, and how do they make the science feel approachable yet credible?",
+                "The heart of our branding is its deliberate colour choices. We chose a palette suited to the widest range of colour blindness conditions to allow the wiki's information to be engaged with by more people. This was critical to our goal of fostering inclusion across every part of the project.",
+                "Our branding guideline was used consistently throughout the earlier stages of the project to establish our cohesive visual identity. The colour palette was selected to maintain visual consistency across our website, presentation materials, and most importantly, our gleyecobuddies. We also used a colour blindness test to evaluate the accessibility of our chosen colours and identify potential issues with colour perception. Choosing this palette was important to our team both to ensure cohesion within gleyeco's visual identity and to remain accessible to those with different forms of colour vision deficiency.",
               ],
-              media: { type: "image" },
+            },
+            {
+              media: { type: "image", src: gleyecoBrandIdentity, alt: "gleyeco brand guideline and colour blindness test" },
+              layout: "full",
+            },
+            {
+              title: "Gleyecobuddies",
+              paragraphs: [
+                "The personification of our proteins made our product more digestible and appealing to general audiences. It simplifies the main concepts of our project for people without a background in biology. Each character was designed with careful consideration to show some resemblance to their real-life counterparts, whether through their physical appearance or function. The term 'gleyecobuddies' is the umbrella term for all the characters we created.",
+                "Lecto is the lectin (Galectin-3) that interacts with our glycan (Core 1). As such, Lecto's design reflects the function of Galectin-3. IL-1RA and HABpep are adjacent to Galectin-3, forming the \"buddy-buddy-like\" structure as they bind together. Lecto's design mirrors its real-life counterpart extensively, embedding the binding site function into their character design.",
+                "Ana is a red plus sign, the universal symbol for health and medicine. Since Ana is the therapeutic component of the project that treats inflamed cells within the eye, their character design embodies healing.",
+                "Lastly, HABpep is a quirky blue rectangle inspired by their function. HABpep is responsible for retention, mitigating the loss of the drug's medicinal properties as they are washed away by tear fluid. HABpep is a sturdy embodiment of a wall, a metaphor for their function of retaining and holding strong in the eye.",
+                "Our three fusion protein domains serve unique functions and work together to treat inflammation. Using symbolism and characters makes gleyeco's science more accessible. The gleyecobuddies enable us to reach and connect with audiences of all backgrounds.",
+              ],
+            },
+            {
+              media: { type: "image", src: gleyecoBuddies, alt: "The gleyecobuddies: Lecto, Ana and HABpep" },
+              layout: "full",
             },
           ],
         },
         {
-          title: "Techniques",
+          title: "The Website's Features",
           blocks: [
             {
-              title: "Stakeholder Communication",
-              paragraphs: ["[TO WRITE]"],
+              title: "Navigation Bar",
+              paragraphs: ["[TO WRITE] What does the navigation bar do, and why did you design it this way?"],
+              media: { type: "video", src: igemNavbar, autoplay: true, alt: "The gleyeco website's navigation bar in use" },
             },
             {
-              title: "Storytelling & Visual Hierarchy",
-              paragraphs: ["Through these design techniques, it becomes easier for people to digest rather complicated information."],
+              title: "Popup",
+              paragraphs: ["[TO WRITE] What do the popups show, and how do they help people understand the science?"],
+              media: { type: "video", src: igemPopup, autoplay: true, alt: "A popup explaining a term on the gleyeco website" },
+            },
+            {
+              title: "Citations",
+              paragraphs: ["[TO WRITE] How do citations work on the site, and how do they support transparency?"],
+              media: { type: "video", src: igemCitations, autoplay: true, alt: "Citations being opened on the gleyeco website" },
             },
           ],
         },
         {
-          title: "Reflection",
+          title: HEADING.reflection,
           blocks: [
             {
               title: "Design for understanding, not just interaction.",
-              paragraphs: ["Scientific accuracy and accessibility don't always come naturally together. I learned how to break down complex research into digestible information without stripping away the science that makes it credible."],
+              paragraphs: [
+                "Scientific accuracy and accessibility don't always come naturally together. I learned how to break down complex research into digestible information without stripping away the science that makes it credible.",
+              ],
             },
             {
               title: "Transparency is part of the user experience.",
-              paragraphs: ["Communicating a product's potential also means communicating its limitations. I learned that building trust requires showing the research, rationale, and uncertainties behind every design decision. More importantly, I learnt to communicate with external stakeholders spanning multiple disciplines, ensuring the project's goals were comprehensible to move the project forward."],
+              paragraphs: [
+                "Communicating a product's potential also means communicating its limitations. I learned that building trust requires showing the research, rationale, and uncertainties behind the design, not just selling the idea.",
+              ],
             },
             {
-              title: "You don't need to know everything, you just need to be willing to learn.",
-              paragraphs: ["Working alongside a team who specialized in biology and chemistry pushed me into unfamiliar territory. I learned to ask better questions, challenge assumptions, and translate specialized knowledge into experiences people can actually understand."],
+              title: "You don't have to be the expert to design for experts.",
+              paragraphs: [
+                "Working alongside a scientific team pushed me into unfamiliar territory. I learned to ask better questions, challenge assumptions, and translate specialized knowledge into experiences people can actually understand.",
+              ],
+            },
+            {
+              paragraphs: [
+                "This project fundamentally expanded my understanding of what product design can accomplish beyond the traditional scope of designing interfaces and improving usability.",
+                "One of my biggest takeaways was learning how to design for understanding, not just interaction. When working with highly technical subject matter, the challenge isn't necessarily making information look appealing; it's making sure people can actually understand what they're looking at, why it matters, and how it affects them. I learned to approach content as an integral part of the user experience, treating information architecture, storytelling, and visual hierarchy as equally important design tools.",
+                "I also learned the importance of designing with transparency, particularly when working in a science-driven and healthcare-adjacent space. It wasn't enough to communicate the potential benefits of gleyeco. We also needed to acknowledge the research behind our decisions, explain the limitations of our approach, and avoid making claims that hadn't yet been validated. This reinforced the importance of building trust through honest, evidence-informed communication rather than relying on persuasive visuals alone.",
+                "Another significant learning experience was navigating a greenfield project with a multidisciplinary team. Working alongside people with specialized scientific knowledge pushed me to ask better questions, challenge assumptions, and become comfortable designing in unfamiliar territory. I learned that a Product Designer doesn't need to be the subject-matter expert, but does need to understand the subject well enough to translate it responsibly.",
+                "Ultimately, this project taught me that good product design isn't just about making complex things easier to use; it's about making complex ideas easier to understand, evaluate, and trust. It strengthened my ability to connect research, communication, and design strategy, and showed me how thoughtful design can help bridge the gap between scientific innovation and the people it aims to serve.",
+              ],
             },
           ],
         },
@@ -241,18 +258,18 @@ export const projects: Project[] = [
     overview: {
       organization: "Network for Applied Technologies (NAT)",
       headline: "How to design for a diverse ecosystem?",
-      media: { type: "image", src: natHeader, alt: "NAT website redesign" },
+      media: { type: "image", src: natHeader, alt: "NAT website redesign", zoom: false },
       summaryColors: ["#FFC3DC", "#E1E1E1", "#FFF8DC"],
 
       summary: [
         {
-          title: "Role Overview",
+          title: HEADING.roleOverview,
           paragraphs: [
             "NAT's website redesign was, in principle, proposed to strengthen their presence in the biotech ecosystem, fostering collaboration between various stakeholders of different backgrounds. As a Product Designer, my role involved understanding the different needs of these stakeholders and ensuring the website could communicate what we offer, and how they can contribute too. Since NAT serves a diverse network of people with very different motivations, the challenge was trying to communicate NAT's interdisciplinary vision while simultaneously maintaining stakeholder interest.",
           ],
         },
         {
-          title: "Usability Testing Methods",
+          title: HEADING.usabilityMethods,
           paragraphs: [
             "Since NAT is interdisciplinary, I was required to delve into the multiple perspectives and motivations for each stakeholder group. Stakeholder Mapping helped identify the different audiences NAT needed to serve and the value each group could both contribute to and receive from the ecosystem. This method helps prioritize the main objectives of each group and how each type of stakeholder can have their own way of calling to action.",
           ],
@@ -302,7 +319,7 @@ export const projects: Project[] = [
           ],
         },
         {
-          title: "Reflection",
+          title: HEADING.reflection,
           blocks: [
             {
               paragraphs: [
@@ -331,19 +348,20 @@ export const projects: Project[] = [
         type: "image",
         src: sentimentiHeader,
         alt: "Sentimenti app screens showing the app's interface and visualizations of emotional data.",
+        zoom: false,
       },
-      summaryColors: ["#B5AEEB", "#CECECE", "#EDEBFC"],
+      summaryColors: ["#cdc8f3", "#CECECE", "#EDEBFC"],
 
       summary: [
         {
-          title: "Role Overview",
+          title: HEADING.roleOverview,
           paragraphs: [
             "Developed during FigBuild 2026, the project challenged us to rethink how people recognize and respond to their emotional states. Sentimenti is our solution to that question. Taking on the Product Designer role consisted of understanding a problem that did not exist in reality, but still needed to be treated with the same realism and care as real products.",
             "Knowing these caveats and pain points, I helped propose and design a mobile tracking app (that can also be connected to your watch) that measures one's emotional fluctuations throughout the day, week, and month. In addition, we also measure one's heart rate, blood pressure, and sweat. By intertwining the fictional concept of Clairempathy with reality, we strengthen the product's feasibility by synthesizing data from multiple points. Although Sentimenti is tracking something fictional, the business outcome for designing a product that tracks emotional data brought privacy, consent, and accessibility into the conversation. Overall, this role challenged the way I question what makes a design truly impactful and truly actionable.",
           ],
         },
         {
-          title: "Usability Testing Methods",
+          title: HEADING.usabilityMethods,
           paragraphs: [
             "Due to the constraints of the project, a Cognitive Walkthrough was used to understand our potential audience, and a Discount Evaluation checked against Nielsen's Heuristics was used to guide design intuitiveness. Although these methods can introduce biased search patterns, the nature of this method is to force our product to undergo an onboarding process, in which we can identify usability barriers and points of confusion. In particular, it allows us to evaluate the learnability of our app by identifying gaps between user expectations and interface feedback, ultimately giving additional insight that could have been initially neglected during the design process.",
           ],
@@ -392,7 +410,7 @@ export const projects: Project[] = [
           ],
         },
         {
-          title: "Reflection",
+          title: HEADING.reflection,
           blocks: [
             {
               paragraphs: [

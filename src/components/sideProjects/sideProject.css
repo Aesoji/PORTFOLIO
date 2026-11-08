@@ -266,8 +266,13 @@
     font-size: 13px;
   }
 
+  .gallery__header {
+    text-align: center;
+  }
+
   .gallery__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 420px);
+    justify-content: center;
   }
 
   .lightbox {

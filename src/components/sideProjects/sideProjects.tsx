@@ -1,50 +1,51 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
-import { flushSync } from "react-dom";
+import { createPortal, flushSync } from "react-dom";
 import { Link } from "react-router-dom";
 import { FiPlus, FiX } from "react-icons/fi";
 import { sideProject, type ProjectItem } from "../../data/sideProjectData";
 import "./sideProject.css";
 
+/* ---------- Helpers ---------- */
 
 const VIDEO_FILE = /\.(mp4|webm|mov|m4v)$/i;
 
 function prefersReducedMotion(): boolean {
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
 /* Imported files become URLs like "/assets/BYBYN-a1b2.mp4" (or "data:video/…" if tiny) */
 function isVideo(src: string): boolean {
-    return VIDEO_FILE.test(src) || src.startsWith("data:video");
+  return VIDEO_FILE.test(src) || src.startsWith("data:video");
 }
 
 type DocumentWithTransitions = Document & {
-    startViewTransition?: (update: () => void) => unknown;
+  startViewTransition?: (update: () => void) => unknown;
 };
 
 /* Runs a state change as a "grow from the tile" animation where the browser supports it */
 function withTransition(update: () => void) {
-    const doc = document as DocumentWithTransitions;
-    
-    if (doc.startViewTransition && !prefersReducedMotion()) {
-        doc.startViewTransition(() => flushSync(update));
-    } else {
-        update();
-    }
+  const doc = document as DocumentWithTransitions;
+  if (doc.startViewTransition && !prefersReducedMotion()) {
+    doc.startViewTransition(() => flushSync(update));
+  } else {
+    update();
+  }
 }
 
+/* ---------- Image or video (grey placeholder when there's no file) ---------- */
 
 interface MediaProps {
-    item: ProjectItem;
-    variant: "tile" | "full";
-    style?: CSSProperties;
+  item: ProjectItem;
+  variant: "tile" | "full";
+  style?: CSSProperties;
 }
 
 function MediaContent({ item, variant }: Readonly<Omit<MediaProps, "style">>) {
-    const { src } = item.media;
-    if (!src) {
-        return null;
+  const { src } = item.media;
+  if (!src) {
+    return null;
   }
-  
+
   const isTile = variant === "tile";
   const alt = item.media.alt ?? item.title;
 
@@ -146,7 +147,7 @@ export default function SideProjects() {
           Other Projects
         </h2>
         <p className="h3" data-reveal style={{ "--reveal-delay": "80ms" } as CSSProperties}>
-            What else have I done?
+          What else have I done? (Click for more info)
         </p>
       </header>
 
@@ -174,39 +175,52 @@ export default function SideProjects() {
         ))}
       </ul>
 
-      {active ? (
-        <div className="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
-          {/* Clicking the dark area around the project closes it */}
-          <button
-            type="button"
-            className="lightbox__backdrop"
-            onClick={close}
-            tabIndex={-1}
-            aria-hidden="true"
-          />
+      {/* Rendered at the end of <body> so it's always centred on the screen */}
+      {active
+        ? createPortal(
+            <div
+              className="lightbox"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="lightbox-title"
+            >
+              {/* Clicking the dark area around the project closes it */}
+              <button
+                type="button"
+                className="lightbox__backdrop"
+                onClick={close}
+                tabIndex={-1}
+                aria-hidden="true"
+              />
 
-          <button
-            ref={closeRef}
-            type="button"
-            className="lightbox__close"
-            onClick={close}
-            aria-label="Close"
-          >
-            <FiX aria-hidden="true" />
-          </button>
+              <button
+                ref={closeRef}
+                type="button"
+                className="lightbox__close"
+                onClick={close}
+                aria-label="Close"
+              >
+                <FiX aria-hidden="true" />
+              </button>
 
-          <figure className="lightbox__content">
-            <Media item={active} variant="full" style={{ viewTransitionName: "gallery-media" }} />
-            <figcaption className="lightbox__caption">
-              <h3 id="lightbox-title" className="lightbox__title">
-                {active.title}
-              </h3>
-              <p className="lightbox__description">{active.description}</p>
-              {active.link ? <ProjectLink link={active.link} /> : null}
-            </figcaption>
-          </figure>
-        </div>
-      ) : null}
+              <figure className="lightbox__content">
+                <Media
+                  item={active}
+                  variant="full"
+                  style={{ viewTransitionName: "gallery-media" }}
+                />
+                <figcaption className="lightbox__caption">
+                  <h3 id="lightbox-title" className="lightbox__title">
+                    {active.title}
+                  </h3>
+                  <p className="lightbox__description">{active.description}</p>
+                  {active.link ? <ProjectLink link={active.link} /> : null}
+                </figcaption>
+              </figure>
+            </div>,
+            document.body,
+          )
+        : null}
     </section>
   );
 }

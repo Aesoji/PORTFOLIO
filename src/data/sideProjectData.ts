@@ -1,7 +1,9 @@
-import bybynVideo from "../assets/sideProjects/BYBYN.mp4";
+import bybnImage from "../assets/sideProjects/BYBN.png";
 import amfImage from "../assets/sideProjects/AMF.png";
 import kanataHubImage from "../assets/sideProjects/KANATAHUB.png";
 import sparkCsImage from "../assets/sideProjects/SPARKCS.png";
+import humanImage from "../assets/sideProjects/HUMAN.png";
+
 
 
 export interface SideProject {
@@ -24,7 +26,7 @@ export const sideProject: ProjectItem[] = [
         id: "sideProject-01",
         title: "BYBN",
         description: "Creating a Tagalog to Baybayin Transcription software that includes the two writing variations.",
-        media: { src: bybynVideo, alt: "Hi"},
+        media: { src: bybnImage, alt: "Hi"},
         link: { label: "Open", href: "https://github.com/Aesoji/BYBYN" },
     },
     {
@@ -41,8 +43,15 @@ export const sideProject: ProjectItem[] = [
     },
     {
         id: "sideProject-04",
+        title: "HUMAN",
+        description: "Creating merch for fun.",
+        media: { src: humanImage, alt: "Hi"},
+    },
+    {
+        id: "sideProject-05",
         title: "AMF",
         description: "Creating a banner for advertisements for the UAlberta Advanced Microscopy Facility.",
         media: { src: amfImage, alt: "Hi"},
-    }
+    },
+   
 ]

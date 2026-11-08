@@ -14,14 +14,14 @@ export interface Tool {
 }
 
 export const tools: Tool[] = [ 
-    { name: "✨ We know how to use Adobe Photoshop.", logo: photoshopLogo },
-    { name: "Adobe Illustrator", logo: illustratorLogo },
-    { name: "Adobe InDesign", logo: indesignLogo },
+    { name: "Adobe_Photoshop.", logo: photoshopLogo },
+    { name: "Adobe_Illustrator", logo: illustratorLogo },
+    { name: "Adobe_Indesign", logo: indesignLogo },
     { name: "Affinity", logo: affinityLogo },
     { name: "Blender", logo: blenderLogo },
     { name: "Figma", logo: figmaLogo },
     { name: "Procreate", logo: procreateLogo },
-    { name: "DaVinci Resolve", logo: davinciLogo },
+    { name: "Davinci_Resolve", logo: davinciLogo },
     { name: "React", logo: reactLogo },
 ];
 

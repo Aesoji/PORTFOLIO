@@ -1,6 +1,6 @@
-import { useId, type CSSProperties } from "react";
+import { useId, type CSSProperties, type ReactNode } from "react";
 import { Link, useParams } from "react-router-dom";
-import ZoomableImage from "../../components/zoomableImage/zoomableImage";
+import ZoomableMedia from "../../components/zoomableMedia/zoomableMedia";
 import {
   projects,
   type CaseStudyBlock,
@@ -49,6 +49,24 @@ function getBlockClassName(block: CaseStudyBlock, reversed: boolean): string {
   return classNames.join(" ");
 }
 
+const BOLD_TEXT = /\*\*(.+?)\*\*/g;
+
+/* Turns "**word**" into bold text: "a **big** idea" → a <strong>big</strong> idea */
+function withBold(text: string): ReactNode[] {
+  const parts: ReactNode[] = [];
+  let lastEnd = 0;
+
+  for (const match of text.matchAll(BOLD_TEXT)) {
+    const start = match.index ?? 0;
+    parts.push(text.slice(lastEnd, start));
+    parts.push(<strong key={start}>{match[1]}</strong>);
+    lastEnd = start + match[0].length;
+  }
+  parts.push(text.slice(lastEnd));
+
+  return parts;
+}
+
 /* A stable React key for blocks, which may have no title */
 function getBlockKey(block: CaseStudyBlock): string {
   return block.title ?? block.media?.alt ?? block.paragraphs?.[0] ?? "block";
@@ -62,12 +80,26 @@ type MediaContentProps = Readonly<{
 }>;
 
 function MediaContent({ media, alt }: MediaContentProps) {
-  if (media.type === "video") {
-    const shouldAutoplay = media.autoplay === true && !prefersReducedMotion();
+  const src = media.src ?? "";
+  const isVideo = media.type === "video";
+  const shouldAutoplay = media.autoplay === true && !prefersReducedMotion();
 
+  if (media.zoom !== false) {
+    return (
+      <ZoomableMedia
+        src={src}
+        alt={alt}
+        isVideo={isVideo}
+        poster={media.poster}
+        autoplay={shouldAutoplay}
+      />
+    );
+  }
+
+  if (isVideo) {
     return (
       <video
-        src={media.src}
+        src={src}
         poster={media.poster}
         aria-label={alt}
         muted
@@ -80,7 +112,7 @@ function MediaContent({ media, alt }: MediaContentProps) {
     );
   }
 
-  return <ZoomableImage src={media.src ?? ""} alt={alt} />;
+  return <img src={src} alt={alt} />;
 }
 
 type OverviewMediaProps = Readonly<{
@@ -123,7 +155,7 @@ function CaseStudyBlockView({ block, reversed }: CaseStudyBlockViewProps) {
           {block.title ? <h3 className="h2">{block.title}</h3> : null}
           {paragraphs.map((paragraph) => (
             <p key={paragraph} className="text">
-              {paragraph}
+              {withBold(paragraph)}
             </p>
           ))}
         </div>
@@ -185,6 +217,7 @@ export default function ProjectOverview() {
   }
 
   const { title, overview } = project;
+  const links = overview.links ?? [];
   const caseStudy = overview.caseStudy ?? [];
 
   return (
@@ -192,6 +225,22 @@ export default function ProjectOverview() {
       <header className="overview__header">
         <p className="overview__eyebrow">{overview.organization}</p>
         <h1 className="title overview__headline">{overview.headline}</h1>
+        {links.length > 0 ? (
+          <div className="overview__links">
+            {links.map((link) => (
+              <a
+                key={link.href}
+                className="see-more"
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {link.label}
+                <span aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </div>
+        ) : null}
       </header>
 
       <OverviewMedia
@@ -214,7 +263,7 @@ export default function ProjectOverview() {
               <h3 className="h2">{part.title}</h3>
               {part.paragraphs.map((paragraph) => (
                 <p key={paragraph} className="text">
-                  {paragraph}
+                  {withBold(paragraph)}
                 </p>
               ))}
             </div>

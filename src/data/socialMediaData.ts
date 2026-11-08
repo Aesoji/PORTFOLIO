@@ -4,10 +4,10 @@ import { FiMail } from "react-icons/fi";
 
 
 export interface SocialLink {
-  id: string;
-  label: string;
-  href: string;
-  icon: IconType;
+    id: string;
+    label: string;
+    href: string;
+    icon: IconType;
 }
 
 
