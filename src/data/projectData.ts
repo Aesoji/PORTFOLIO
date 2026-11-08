@@ -13,7 +13,7 @@ import natPrototype from "../assets/projects/NAT_PROTOTYPE.png";
 import igemCover from "../assets/projects/IGEM_COVER.mp4";
 import igemHeader from "../assets/projects/IGEM_HEADER.png";
 import gleyecoBrandIdentity from "../assets/projects/GLEYECO_BRAND_IDENTITY.png";
-import gleyecoBuddies from "../assets/projects/GLEYECOBUDDIES.png";
+import gleyecoBuddies from "../assets/projects/GLEYECO_BUDDIES.png";
 import igemNavbar from "../assets/projects/GLEYECO_NAVIGATION_BAR.mp4";
 import igemPopup from "../assets/projects/GLEYECO_POP.mp4";
 import igemCitations from "../assets/projects/GLEYECO_CITATIONS.mp4";
