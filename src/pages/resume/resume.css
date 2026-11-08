@@ -6,6 +6,7 @@
   box-sizing: border-box;
 }
 
+
 .resume__header {
   display: flex;
   flex-wrap: wrap;
@@ -16,9 +17,11 @@
   margin: 0 auto 32px;
 }
 
+
 .resume__header .title {
   margin-bottom: 0;
 }
+
 
 .resume__actions {
   display: flex;
@@ -26,10 +29,12 @@
   gap: 12px;
 }
 
+
 .resume__viewer {
   max-width: 850px;
   margin: 0 auto;
 }
+
 
 .resume__page {
   margin-bottom: 24px;
@@ -41,15 +46,18 @@
     0 8px 24px rgba(45, 45, 45, 0.1);
 }
 
+
 .resume__page canvas {
   display: block;
 }
+
 
 @media (max-width: 900px) {
   .resume {
     padding: 120px 24px 110px;
   }
 }
+
 
 @media (max-width: 480px) {
   .resume {

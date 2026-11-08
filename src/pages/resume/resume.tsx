@@ -6,14 +6,14 @@ import pdfWorker from "pdfjs-dist/legacy/build/pdf.worker.min.mjs?url";
 import resumePdf from "../../assets/resume/resume.pdf";
 import "./resume.css";
 
-/* The PDF engine runs in a background worker so the page stays smooth.
-   The "legacy" build adds fallbacks for browsers missing newer features. */
+
 pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker;
+
 
 const MAX_PAGE_WIDTH = 850;
 const DOWNLOAD_NAME = "Kenneth_Resume.pdf";
 
-/* Keeps track of an element's width as the screen size changes */
+
 function useElementWidth() {
   const ref = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
@@ -31,6 +31,7 @@ function useElementWidth() {
   return { ref, width };
 }
 
+
 function ResumeError() {
   return (
     <p className="text">
@@ -43,7 +44,7 @@ function ResumeError() {
   );
 }
 
-/* If the viewer crashes (e.g. a very old browser), show the links instead */
+
 class ViewerErrorBoundary extends Component<Readonly<{ children: ReactNode }>, { hasError: boolean }> {
   state = { hasError: false };
 
@@ -58,6 +59,7 @@ class ViewerErrorBoundary extends Component<Readonly<{ children: ReactNode }>, {
     return this.props.children;
   }
 }
+
 
 export default function Resume() {
   const viewer = useElementWidth();

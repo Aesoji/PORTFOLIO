@@ -6,14 +6,19 @@
 }
 
 .tools__board {
+  /* 1 unit = 1cqb, or less when the card is too narrow (100 / 145 ≈ 0.69).
+     Lower 0.66 if anything still clips; raise it if narrow cards feel sparse. */
+  --u: min(1cqb, 0.66cqi);
+
+  box-sizing: border-box;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  gap: 6cqb;
+  gap: calc(var(--u) * 6);
   width: 100%;
   height: 100%;
-  padding: 0 8cqb;
+  padding: 0 calc(var(--u) * 8);
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: 16px;
@@ -38,11 +43,11 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1cqb;
+  gap: calc(var(--u) * 1);
 }
 
 .tools__word {
-  font-size: 9cqb;
+  font-size: calc(var(--u) * 9);
   font-weight: 700;
   line-height: 1.1;
   white-space: nowrap;
@@ -50,14 +55,14 @@
 
 .tools__grid {
   display: grid;
-  grid-template-columns: repeat(3, 22cqb);
-  gap: 7cqb;
+  grid-template-columns: repeat(3, calc(var(--u) * 22));
+  gap: calc(var(--u) * 7);
 }
 
 .tools__tile {
   display: grid;
   place-items: center;
-  width: 22cqb;
+  width: calc(var(--u) * 22);
   aspect-ratio: 1 / 1;
 }
 
@@ -67,7 +72,7 @@
 }
 
 .tools__board:hover .tools__piece {
-  transform: translateY(-1cqb);
+  transform: translateY(calc(var(--u) * -1));
 }
 
 .tools--falling .tools__piece {
@@ -81,15 +86,15 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 1cqb 1.5cqb rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 calc(var(--u) * 1) calc(var(--u) * 1.5) rgba(0, 0, 0, 0.2));
   user-select: none;
 }
 
 .tools__hint {
   position: absolute;
-  bottom: 3.5cqb;
+  bottom: calc(var(--u) * 3.5);
   left: 50%;
-  font-size: 3.5cqb;
+  font-size: calc(var(--u) * 3.5);
   font-weight: 500;
   opacity: 0.55;
   transform: translateX(-50%);

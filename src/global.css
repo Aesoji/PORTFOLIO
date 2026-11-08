@@ -94,11 +94,12 @@ textarea {
 
 
 .text {
-  font-size: clamp(0.875rem, 0.9rem + 0.2vw, 0.95rem);
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);
   font-weight: 250;
   line-height: 3.0rem;
   margin: 0 0 1.5rem;
 }
+
 
 .see-more {
   display: inline-flex;
@@ -113,15 +114,18 @@ textarea {
   transition: background-color 0.2s ease, gap 0.2s ease;
 }
 
+
 .see-more:hover {
   background-color: var(--nav-bg);
-  gap: 10px; /* arrow nudges away on hover */
+  gap: 10px; 
 }
+
 
 .see-more:focus-visible {
   outline: 2px solid var(--black);
   outline-offset: 2px;
 }
+
 
 @media (prefers-reduced-motion: reduce) {
   .see-more {

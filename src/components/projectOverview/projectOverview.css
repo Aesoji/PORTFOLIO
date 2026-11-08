@@ -7,7 +7,8 @@
 }
 
 .overview .text {
-  line-height: 3;
+  margin-bottom: 0.75rem;
+  line-height: 3.0;
 }
 
 .overview--missing {
@@ -116,10 +117,6 @@
   margin-bottom: 0.5rem;
 }
 
-.summary-card .text {
-  margin-bottom: 1rem;
-}
-
 .summary__part + .summary__part {
   margin-top: 1.5rem;
 }
@@ -194,7 +191,8 @@
   height: auto;
 }
 
-.cs-section__blocks > .cs-block--full:not(:has(.cs-block__text)) {
+.cs-section__blocks > .cs-block--full:not(:first-child, :has(.cs-block__text)),
+.cs-section__blocks > .cs-block--full:not(:has(.cs-block__text)) + .cs-block {
   margin-top: calc(clamp(32px, 4vw, 48px) / -2);
 }
 

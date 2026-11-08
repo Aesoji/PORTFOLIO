@@ -5,7 +5,6 @@ import sparkCsImage from "../assets/sideProjects/SPARKCS.png";
 import humanImage from "../assets/sideProjects/HUMAN.png";
 
 
-
 export interface SideProject {
     src?: string;
     alt?: string;
