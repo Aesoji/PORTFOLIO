@@ -10,9 +10,8 @@ export default function Home() {
     return (
         <main className="home" ref={revealRef}>
             
-            <section id="hero" className="home_hero" aria-label="Hero">
-                {/* WIP */}
-            </section>
+            {/* <section id="hero" className="home_hero" aria-label="Hero">
+            </section> */}
 
             <section id="projects" className="home_projects" aria-label="Projects">
                 {projects.map((project, index) => ( 
