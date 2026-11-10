@@ -10,9 +10,11 @@ export default function Home() {
     return (
         <main className="home" ref={revealRef}>
             
-            {/* <section id="hero" className="home_hero" aria-label="Hero">
-            </section> */}
-
+            <section id="intro" className="home_intro" aria-label="Introduction">
+                <h1 className="home_intro_name">It's the story that gives design life.</h1>
+                <p className="home_intro_tagline">- Kenneth Jake Agonoy</p>
+            </section>
+            
             <section id="projects" className="home_projects" aria-label="Projects">
                 {projects.map((project, index) => ( 
                     <ProjectCard key={project.id} project={project} reversed={index % 2 == 1}/>

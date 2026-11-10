@@ -1,3 +1,29 @@
+.home_intro {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+.home_intro_name {
+  font-size: clamp(3rem, 4vw, 7rem);
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+}
+
+.home_intro_tagline {
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  font-style: italic;
+  opacity: 0.75;
+  max-width: 32ch;
+  margin: 0;
+}
+
 .home {
   display: flex;
   flex-direction: column;
@@ -94,3 +120,4 @@
     padding: 56px 16px 88px;
   }
 }
+
